@@ -27,7 +27,7 @@ function searchMovie() {
       // Fetch and set the href when the button is clicked
       downloadBtn.addEventListener("click", function (event) {
         event.preventDefault(); // Prevent default behavior
-        fetchAndSetDownloadLink(txtPath, downloadBtn);
+        fetchAndDownloadLink(txtPath, downloadBtn);
       });
 
       resultContainer.innerHTML = `
@@ -55,8 +55,8 @@ function searchMovie() {
   }
 }
 
-// Fetch the URL from the TXT file and set it to the href attribute of the anchor tag
-function fetchAndSetDownloadLink(txtPath, anchor) {
+// Fetch the URL from the TXT file, set it to the href of the anchor tag, and trigger download
+function fetchAndDownloadLink(txtPath, anchor) {
   fetch(txtPath)
     .then((response) => {
       if (!response.ok) {
@@ -67,7 +67,8 @@ function fetchAndSetDownloadLink(txtPath, anchor) {
     .then((downloadUrl) => {
       const trimmedUrl = downloadUrl.trim(); // Trim unnecessary spaces/newlines
       anchor.href = trimmedUrl; // Update the href with the link from the text file
-      anchor.click(); // Trigger the download after updating the link
+      anchor.download = ""; // Add the download attribute
+      anchor.click(); // Trigger the download programmatically
     })
     .catch((error) => {
       alert("Error: " + error.message);
