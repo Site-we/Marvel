@@ -12,12 +12,13 @@ function searchMovie() {
     const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
     const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
 
+
     const img = new Image();
     img.src = imagePath;
 
     img.onload = function () {
       resultContainer.innerHTML = `
-        <h2>Results for "${query}"</h2> <!-- Show the original query -->
+        <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
         <br>
         <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
@@ -40,3 +41,35 @@ function searchMovie() {
     gallery.style.display = "grid";
   }
 }
+
+// Fetch the URL from the TXT file and download the linked content
+function fetchAndDownload(txtPath, movieName) {
+  fetch(txtPath)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch the download link.");
+      }
+      return response.text();
+    })
+    .then((downloadUrl) => {
+      // Trim the URL and initiate a download
+      const trimmedUrl = downloadUrl.trim();
+
+      const a = document.createElement("a");
+      a.href = trimmedUrl;
+      a.download = movieName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    })
+    .catch((error) => {
+      alert("Error: " + error.message);
+    });
+}
+
+document.getElementById("search").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    searchMovie(); // Call the search function
+    this.blur(); // Close the keyboard
+  }
+});
