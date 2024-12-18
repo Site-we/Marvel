@@ -16,12 +16,26 @@ function searchMovie() {
     img.src = imagePath;
 
     img.onload = function () {
+      // Dynamically create an <a> tag for the download button
+      const downloadBtn = document.createElement("a");
+      downloadBtn.textContent = "Download";
+      downloadBtn.href = "#"; // Default placeholder
+      downloadBtn.target = "_blank";
+      downloadBtn.id = "download-btn";
+      downloadBtn.style.cursor = "pointer";
+
+      // Fetch and set the href when the button is clicked
+      downloadBtn.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent default behavior
+        fetchAndSetDownloadLink(txtPath, downloadBtn);
+      });
+
       resultContainer.innerHTML = `
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
         <br>
-        <a id="download-btn" href="#" onclick="fetchAndSetDownloadLink('${txtPath}', this)" target="_blank">Download</a>
       `;
+      resultContainer.appendChild(downloadBtn); // Append the button dynamically
       gallery.style.display = "none";
     };
 
@@ -52,8 +66,8 @@ function fetchAndSetDownloadLink(txtPath, anchor) {
     })
     .then((downloadUrl) => {
       const trimmedUrl = downloadUrl.trim(); // Trim unnecessary spaces/newlines
-      anchor.href = trimmedUrl; // Set the fetched URL as the href of the anchor tag
-      anchor.download = ""; // Set download attribute (optional, to enable file download)
+      anchor.href = trimmedUrl; // Update the href with the link from the text file
+      anchor.click(); // Trigger the download after updating the link
     })
     .catch((error) => {
       alert("Error: " + error.message);
