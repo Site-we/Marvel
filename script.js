@@ -21,7 +21,7 @@ function searchMovie() {
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
         <br>
-        <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
+        <a id="download-btn" href="${txtPath}" target="_blank" download>Download</a>
       `;
       gallery.style.display = "none";
     };
