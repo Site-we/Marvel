@@ -66,6 +66,7 @@ function fetchAndDownload(txtPath, movieName) {
 
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    searchMovie();
+    searchMovie(); // Call the search function
+    this.blur(); // Close the keyboard
   }
 });
