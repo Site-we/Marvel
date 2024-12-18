@@ -25,6 +25,10 @@ header h1 {
 /* Search Bar Styles */
 .search-container {
   margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap; /* Allow button to wrap below input on smaller screens */
+  justify-content: center; /* Center-align in case of wrapping */
+  gap: 10px; /* Add spacing between the input and button in both modes */
 }
 
 .search-container input {
@@ -38,7 +42,6 @@ header h1 {
 }
 
 .search-container button {
-  margin-left: 20px; /* Added spacing between search box and button */
   padding: 12px 25px;
   border: none;
   background-color: #fff;
@@ -55,8 +58,8 @@ header h1 {
 .search-container button:hover {
   background-color: #ff8080;
   transform: scale(1.05);
-}
-/* Gallery Styles */
+}/* Gallery Styles */
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
