@@ -23,6 +23,14 @@ header h1 {
 }
 
 /* Search Bar Styles */
+.search-container {
+  margin: 20px 0;
+  display: flex;
+  flex-wrap: wrap; /* Allows the button to wrap below input on smaller screens */
+  justify-content: center; /* Center-align in case of wrapping */
+  gap: 15px; /* Adds spacing between the input and button */
+}
+
 .search-container input {
   width: 85%; /* Wider search box */
   max-width: 700px;
@@ -31,7 +39,8 @@ header h1 {
   border-radius: 5px;
   font-size: 1.2rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  outline: none; /* Removes black strip around the search box on focus */
+  outline: none; /* Removes the black strip around the box */
+  margin-bottom: 10px; /* Adds spacing below the search box */
 }
 
 .search-container input:focus {
