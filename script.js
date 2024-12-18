@@ -1,6 +1,6 @@
 function searchMovie() {
-  // Get the user's search query
-  const query = document.getElementById("search").value.trim().toLowerCase();
+  // Get the user's search query and remove whitespaces
+  const query = document.getElementById("search").value.trim().replace(/\s+/g, "").toLowerCase();
 
   // Reference to the search result container and the gallery
   const resultContainer = document.getElementById("search-result");
@@ -37,8 +37,12 @@ function searchMovie() {
       gallery.style.display = "grid";
     };
   } else {
-    alert("Please enter a movie name to search.");
-    // Show the gallery if the search input is empty
+    // Display an error message if the input is empty
+    resultContainer.innerHTML = `
+      <h2>No input provided</h2>
+      <p>Please enter a movie name to search.</p>
+    `;
+    // Show the gallery
     gallery.style.display = "grid";
   }
 }
