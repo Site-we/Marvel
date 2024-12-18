@@ -28,16 +28,17 @@ header h1 {
 }
 
 .search-container input {
-  width: 60%;
-  max-width: 500px;
+  width: 70%;
+  max-width: 600px;
   padding: 12px 15px;
   border: none;
   border-radius: 5px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .search-container button {
+  margin-left: 15px;
   padding: 12px 25px;
   border: none;
   background-color: #fff;
@@ -45,10 +46,9 @@ header h1 {
   font-size: 1.1rem;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
   font-weight: bold;
   text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -98,7 +98,7 @@ header h1 {
 #download-btn {
   display: inline-block;
   padding: 15px 30px;
-  margin-top: 20px;
+  margin: 20px auto 40px; /* Added bottom margin to create space */
   font-size: 1.2rem;
   font-weight: bold;
   color: #ffffff;
