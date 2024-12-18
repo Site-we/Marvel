@@ -23,22 +23,19 @@ header h1 {
 }
 
 /* Search Bar Styles */
-.search-container {
-  margin: 20px 0;
-  display: flex;
-  flex-wrap: wrap; /* Allow button to wrap below input on smaller screens */
-  justify-content: center; /* Center-align in case of wrapping */
-  gap: 10px; /* Add spacing between the input and button in both modes */
-}
-
 .search-container input {
-  width: 85%; /* Increased the width to make it wider */
-  max-width: 700px; /* Increased max-width for larger devices */
+  width: 85%; /* Wider search box */
+  max-width: 700px;
   padding: 12px 15px;
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  outline: none; /* Removes black strip around the search box on focus */
+}
+
+.search-container input:focus {
+  box-shadow: 0px 0px 8px rgba(230, 36, 41, 0.8); /* Optional focus effect */
 }
 
 .search-container button {
