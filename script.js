@@ -12,7 +12,6 @@ function searchMovie() {
     const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
     const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
 
-
     const img = new Image();
     img.src = imagePath;
 
@@ -21,7 +20,7 @@ function searchMovie() {
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
         <br>
-        <a id="download-btn" href="${txtPath}" target="_blank" download>Download</a>
+        <a id="download-btn" href="#" onclick="fetchAndSetDownloadLink('${txtPath}', this)" target="_blank">Download</a>
       `;
       gallery.style.display = "none";
     };
@@ -42,8 +41,8 @@ function searchMovie() {
   }
 }
 
-// Fetch the URL from the TXT file and download the linked content
-function fetchAndDownload(txtPath, movieName) {
+// Fetch the URL from the TXT file and set it to the href attribute of the anchor tag
+function fetchAndSetDownloadLink(txtPath, anchor) {
   fetch(txtPath)
     .then((response) => {
       if (!response.ok) {
@@ -52,21 +51,16 @@ function fetchAndDownload(txtPath, movieName) {
       return response.text();
     })
     .then((downloadUrl) => {
-      // Trim the URL and initiate a download
-      const trimmedUrl = downloadUrl.trim();
-
-      const a = document.createElement("a");
-      a.href = trimmedUrl;
-      a.download = movieName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      const trimmedUrl = downloadUrl.trim(); // Trim unnecessary spaces/newlines
+      anchor.href = trimmedUrl; // Set the fetched URL as the href of the anchor tag
+      anchor.download = ""; // Set download attribute (optional, to enable file download)
     })
     .catch((error) => {
       alert("Error: " + error.message);
     });
 }
 
+// Close the keyboard on Enter
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     searchMovie(); // Call the search function
