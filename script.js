@@ -78,3 +78,21 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     this.blur();
   }
 });
+function saveMXLinkAndPlay(txtPath) {
+  fetch(txtPath)
+    .then((response) => {
+      if (!response.ok) throw new Error("Could not fetch the watch link.");
+      return response.text();
+    })
+    .then((watchUrl) => {
+      const trimmedUrl = watchUrl.trim();
+      // Construct MX Player's deep link
+      const mxPlayerLink = `intent:${trimmedUrl}#Intent;package=com.mxtech.videoplayer.ad;scheme=http;end;`;
+
+      // Redirect to MX Player
+      window.location.href = mxPlayerLink;
+    })
+    .catch((error) => {
+      alert("Error: " + error.message);
+    });
+}
