@@ -20,9 +20,10 @@
       color: #e62429;
     }
 
-    iframe {
-      margin: 20px 0;
-      border: none;
+    video {
+      margin-top: 20px;
+      max-width: 90%;
+      height: auto;
       border-radius: 10px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     }
@@ -38,16 +39,19 @@
   <h1>Watch Your Movie</h1>
   <div id="movie-container"></div>
   <script>
-    // Get the watch link from local storage
+    // Retrieve the movie link from local storage
     const watchLink = localStorage.getItem("a");
 
     if (watchLink) {
-      // If the link exists, display it in an iframe
+      // If a valid link exists, display the video player
       document.getElementById("movie-container").innerHTML = `
-        <iframe src="${watchLink}" width="90%" height="500px"></iframe>
+        <video controls>
+          <source src="${watchLink}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       `;
     } else {
-      // If no link is found, show an error message
+      // If no link is found, display an error message
       document.getElementById("movie-container").innerHTML = `
         <p class="error-message">No movie link found. Please go back and select a movie to watch.</p>
       `;
