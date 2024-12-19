@@ -145,3 +145,29 @@ header h1 {
   background-color: #218838;
   transform: scale(1.1);
 }
+.language-selection {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.language-selection label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.language-selection select {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  background-color: #28a745; /* Green color */
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.language-selection select:hover {
+  background-color: #218838;
+}
