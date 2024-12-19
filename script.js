@@ -64,6 +64,25 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
+// Play the video with MX Player using the URL in the TXT file
+function playWithMXPlayer(txtPath) {
+  fetch(txtPath)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch the streaming link.");
+      }
+      return response.text();
+    })
+    .then((streamUrl) => {
+      // Trim the URL and launch MX Player
+      const trimmedUrl = streamUrl.trim();
+      window.location.href = `intent:${trimmedUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=Stream Video;end;`;
+    })
+    .catch((error) => {
+      alert("Error: " + error.message);
+    });
+}
+
 //Search when clicking on an image in the gallery
 function searchMovieByImage(movieName) {
   const searchInput = document.getElementById("search");
