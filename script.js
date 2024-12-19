@@ -17,12 +17,13 @@ function searchMovie() {
 
     img.onload = function () {
       resultContainer.innerHTML = `
-        <h2>Result for "${query}"</h2>
-        <img src="${imagePath}" alt="${query}">
-        <br>
-        <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
-        <button id="mx-player-btn" onclick="playWithMXPlayer('${txtPath}')">Play with MX Player</button>
-      `;
+  <h2>Result for "${query}"</h2>
+  <img src="${imagePath}" alt="${query}">
+  <br>
+  <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
+  <br>
+  <button id="mx-player-btn" onclick="playWithMXPlayer('${txtPath}')">Play with MX Player</button>
+`;
       gallery.style.display = "none";
     };
 
