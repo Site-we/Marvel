@@ -117,3 +117,10 @@ function saveMXLinkAndPlay(txtPath) {
       alert("Error: " + error.message);
     });
 }
+// Detect back button press and refresh the page
+window.addEventListener('popstate', function() {
+  location.reload(); // Refresh the page
+});
+
+// Optional: Push a state to history when the page loads, to detect back action
+window.history.pushState({}, document.title, window.location.href);
