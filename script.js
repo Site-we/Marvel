@@ -66,21 +66,6 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
-function saveWatchLinkAndRedirect(txtPath) {
-  fetch(txtPath)
-    .then((response) => {
-      if (!response.ok) throw new Error("Could not fetch the watch link.");
-      return response.text();
-    })
-    .then((watchUrl) => {
-      const trimmedUrl = watchUrl.trim();
-      localStorage.setItem("a", trimmedUrl);
-      window.location.href = "watch.html";
-    })
-    .catch((error) => {
-      alert("Error: " + error.message);
-    });
-}
 //Search when clicking on an image in the gallery
 function searchMovieByImage(movieName) {
   const searchInput = document.getElementById("search");
