@@ -94,7 +94,7 @@ header h1 {
 }
 
 .search-result img {
-  width: 60%;
+  width: 50%;
   max-width: 300px;
   height: auto;
   object-fit: cover;
