@@ -1,59 +1,48 @@
-function searchMovie(queryFromImage = null) {
+function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = queryFromImage || searchInput.value.trim(); // Get query from image click or input value
+  const query = searchInput.value.trim(); // Keep original search text
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
-  const downloadBtn = document.getElementById("download-btn");
 
-  // Clear previous results and reset UI components for each new search
-  resultContainer.innerHTML = ""; // Clear previous search result
-  downloadBtn.style.display = "none"; // Hide the download button initially
-  searchInput.placeholder = "Search your favorite Marvel movie..."; // Reset placeholder text
-  gallery.style.display = "grid"; // Always show gallery initially
+  resultContainer.innerHTML = "";
 
-  if (!query) {
-    // If no input is provided, show the message and return
-    searchInput.placeholder = "Please enter a movie to search...";
-    return;
-  }
+  if (formattedQuery) {
+    const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
+    const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
 
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format input for file paths
-  const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
-  const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
 
-  const img = new Image();
-  img.src = imagePath;
+    const img = new Image();
+    img.src = imagePath;
 
-  img.onload = function () {
-    // Show result when image is successfully loaded
-    resultContainer.innerHTML = `
-      <h2>Result for "${query}"</h2>
-      <img src="${imagePath}" alt="${query}">
-    `;
-    gallery.style.display = "none"; // Hide the gallery if result found
-
-    // Show download button for valid movie
-    downloadBtn.style.display = "inline-block";
-    downloadBtn.onclick = function () {
-      fetchAndDownload(txtPath, query);
+    img.onload = function () {
+      resultContainer.innerHTML = `
+        <h2>Result for "${query}"</h2>
+        <img src="${imagePath}" alt="${query}">
+        <br>
+        <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
+      `;
+      gallery.style.display = "none";
     };
-  };
 
-  img.onerror = function () {
-    // Show error message when image is not found
+    img.onerror = function () {
+      resultContainer.innerHTML = `
+        <h2>No results found for "${query}"</h2>
+        <p>Make sure the movie name matches the folder and file structure.</p>
+      `;
+      gallery.style.display = "grid";
+    };
+  } else {
     resultContainer.innerHTML = `
-      <h2>No results found for "${query}"</h2>
-      <p>Please ensure the movie name is correct and matches the file structure.</p>
+      <h2>No input provided</h2>
+      <p>Please enter a movie name to search.</p>
     `;
-    gallery.style.display = "grid"; // Show gallery again if no result
-  };
-
-  // Reset search input for new search
-  searchInput.value = "";
+    gallery.style.display = "grid";
+  }
 }
 
-// Function to handle download from .txt file
+// Fetch the URL from the TXT file and download the linked content
 function fetchAndDownload(txtPath, movieName) {
   fetch(txtPath)
     .then((response) => {
@@ -63,6 +52,7 @@ function fetchAndDownload(txtPath, movieName) {
       return response.text();
     })
     .then((downloadUrl) => {
+      // Trim the URL and initiate a download
       const trimmedUrl = downloadUrl.trim();
 
       const a = document.createElement("a");
@@ -77,18 +67,9 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
-// Trigger search when pressing Enter
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    searchMovie(); // Trigger search on Enter key press
+    searchMovie(); // Call the search function
     this.blur(); // Close the keyboard
   }
-});
-
-// Add click event listeners to gallery images
-document.querySelectorAll(".gallery img").forEach((image) => {
-  image.addEventListener("click", function () {
-    const movieName = this.alt; // Use the alt attribute of the image as the movie name
-    searchMovie(movieName); // Trigger search for that movie
-  });
 });
