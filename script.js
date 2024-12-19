@@ -6,8 +6,7 @@ function searchMovieByImage(movieName) {
 
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim(); // Get the full movie name (e.g., "Iron Man")
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format it for folder/file paths
+  const query = searchInput.value.trim(); // Get the user input and trim spaces
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
@@ -16,41 +15,42 @@ function searchMovie() {
   resultContainer.innerHTML = "";
   downloadBtn.style.display = "none"; // Hide the download button initially
 
-  if (formattedQuery) {
-    const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
-    const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
+  if (query === "") {
+    // No input case
+    searchInput.placeholder = "Please search a movie..."; // Change the placeholder text
+    searchInput.value = ""; // Clear the input field if it has whitespace
+    gallery.style.display = "grid"; // Show the gallery
+    return; // Exit the function
+  }
 
-    const img = new Image();
-    img.src = imagePath;
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format input for file paths
+  const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
+  const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
 
-    img.onload = function () {
-      resultContainer.innerHTML = `
-        <h2>Result for "${query}"</h2>
-        <img src="${imagePath}" alt="${query}">
-      `;
-      gallery.style.display = "none";
+  const img = new Image();
+  img.src = imagePath;
 
-      // Show and configure the download button
-      downloadBtn.style.display = "inline-block";
-      downloadBtn.onclick = function () {
-        fetchAndDownload(txtPath, query);
-      };
-    };
-
-    img.onerror = function () {
-      resultContainer.innerHTML = `
-        <h2>No results found for "${query}"</h2>
-        <p>Make sure the movie name matches the folder and file structure.</p>
-      `;
-      gallery.style.display = "grid";
-    };
-  } else {
+  img.onload = function () {
     resultContainer.innerHTML = `
-      <h2>No input provided</h2>
-      <p>Please enter a movie name to search.</p>
+      <h2>Result for "${query}"</h2>
+      <img src="${imagePath}" alt="${query}">
+    `;
+    gallery.style.display = "none";
+
+    // Show and configure the download button
+    downloadBtn.style.display = "inline-block";
+    downloadBtn.onclick = function () {
+      fetchAndDownload(txtPath, query);
+    };
+  };
+
+  img.onerror = function () {
+    resultContainer.innerHTML = `
+      <h2>No results found for "${query}"</h2>
+      <p>Make sure the movie name matches the folder and file structure.</p>
     `;
     gallery.style.display = "grid";
-  }
+  };
 }
 
 function fetchAndDownload(txtPath, movieName) {
