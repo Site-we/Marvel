@@ -1,14 +1,14 @@
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim();  // Get the search query from the input
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase();  // Format the query to match the folder names
+  const query = searchInput.value.trim(); // Keep the original search text
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
   const downloadBtn = document.getElementById("download-btn");
 
   resultContainer.innerHTML = "";
-  downloadBtn.style.display = "none";  // Hide the download button initially
+  downloadBtn.style.display = "none"; // Hide the download button initially
 
   if (formattedQuery) {
     const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
@@ -59,6 +59,7 @@ function fetchAndDownload(txtPath, movieName) {
     .then((downloadUrl) => {
       const trimmedUrl = downloadUrl.trim();
 
+      // Create an <a> element to trigger the download
       const a = document.createElement("a");
       a.href = trimmedUrl;
       a.download = movieName;
@@ -71,16 +72,9 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
-// Handle the search when an image is clicked
-function searchMovieByImage(movieName) {
-  const searchInput = document.getElementById("search");
-  searchInput.value = movieName;  // Set the search input value to the movie name
-  searchMovie();  // Trigger the search
-}
-
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    searchMovie();  // Call the search function on pressing Enter
-    this.blur();  // Close the keyboard on mobile devices
+    searchMovie(); // Call the search function
+    this.blur(); // Close the keyboard on mobile devices
   }
 });
