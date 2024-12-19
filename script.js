@@ -81,6 +81,13 @@ function saveWatchLinkAndRedirect(txtPath) {
       alert("Error: " + error.message);
     });
 }
+//Search when clicking on an image in the gallery
+function searchMovieByImage(movieName) {
+  const searchInput = document.getElementById("search");
+  searchInput.value = movieName; // Set the movie name into the search input
+
+  searchMovie(); // Trigger the search function
+}
 
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
