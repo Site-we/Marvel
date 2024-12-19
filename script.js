@@ -39,6 +39,9 @@ function searchMovie() {
     `;
     gallery.style.display = "grid";
   }
+
+  // Clear the search input after performing the search
+  searchInput.value = '';  // Clear the search bar
 }
 
 // Fetch the URL from the TXT file and download the linked content
