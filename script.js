@@ -1,21 +1,21 @@
 function searchMovie(queryFromImage = null) {
   const searchInput = document.getElementById("search");
-  const query = queryFromImage || searchInput.value.trim(); // Use query from image click or input value
+  const query = queryFromImage || searchInput.value.trim(); // Get query from image click or input value
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
   const downloadBtn = document.getElementById("download-btn");
 
-  // Reset previous results and state
-  resultContainer.innerHTML = ""; // Clear previous search results
+  // Clear previous results and reset UI components for each new search
+  resultContainer.innerHTML = ""; // Clear previous search result
   downloadBtn.style.display = "none"; // Hide the download button initially
-  gallery.style.display = "grid"; // Ensure the gallery is visible for new searches if no match
+  searchInput.placeholder = "Search your favorite Marvel movie..."; // Reset placeholder text
+  gallery.style.display = "grid"; // Always show gallery initially
 
   if (!query) {
-    // Handle empty input
-    searchInput.placeholder = "Please search a movie..."; // Update placeholder text
-    searchInput.value = ""; // Clear the input field
-    return; // Exit the function
+    // If no input is provided, show the message and return
+    searchInput.placeholder = "Please enter a movie to search...";
+    return;
   }
 
   const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format input for file paths
@@ -26,14 +26,14 @@ function searchMovie(queryFromImage = null) {
   img.src = imagePath;
 
   img.onload = function () {
-    // Display search result
+    // Show result when image is successfully loaded
     resultContainer.innerHTML = `
       <h2>Result for "${query}"</h2>
       <img src="${imagePath}" alt="${query}">
     `;
-    gallery.style.display = "none"; // Hide the gallery
+    gallery.style.display = "none"; // Hide the gallery if result found
 
-    // Show and configure the download button
+    // Show download button for valid movie
     downloadBtn.style.display = "inline-block";
     downloadBtn.onclick = function () {
       fetchAndDownload(txtPath, query);
@@ -41,15 +41,15 @@ function searchMovie(queryFromImage = null) {
   };
 
   img.onerror = function () {
-    // Handle invalid search
+    // Show error message when image is not found
     resultContainer.innerHTML = `
       <h2>No results found for "${query}"</h2>
-      <p>Make sure the movie name matches the folder and file structure.</p>
+      <p>Please ensure the movie name is correct and matches the file structure.</p>
     `;
-    gallery.style.display = "grid"; // Show the gallery again
+    gallery.style.display = "grid"; // Show gallery again if no result
   };
 
-  // Reset search input for new searches
+  // Reset search input for new search
   searchInput.value = "";
 }
 
@@ -80,7 +80,7 @@ function fetchAndDownload(txtPath, movieName) {
 // Trigger search when pressing Enter
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    searchMovie(); // Call the search function
+    searchMovie(); // Trigger search on Enter key press
     this.blur(); // Close the keyboard
   }
 });
@@ -89,6 +89,6 @@ document.getElementById("search").addEventListener("keydown", function (event) {
 document.querySelectorAll(".gallery img").forEach((image) => {
   image.addEventListener("click", function () {
     const movieName = this.alt; // Use the alt attribute of the image as the movie name
-    searchMovie(movieName);
+    searchMovie(movieName); // Trigger search for that movie
   });
 });
