@@ -1,14 +1,14 @@
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim(); // Keep the original search text
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
+  const query = searchInput.value.trim();  // Get the search query and trim any extra spaces
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase();  // Format the query for file paths
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
   const downloadBtn = document.getElementById("download-btn");
 
   resultContainer.innerHTML = "";
-  downloadBtn.style.display = "none"; // Hide the download button initially
+  downloadBtn.style.display = "none";  // Hide the button initially
 
   if (formattedQuery) {
     const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
@@ -22,10 +22,11 @@ function searchMovie() {
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
       `;
-      gallery.style.display = "none";
+      gallery.style.display = "none";  // Hide the gallery while showing the result
 
-      // Show and configure the download button
+      // Show the download button
       downloadBtn.style.display = "inline-block";
+      // Set the download button's onclick action to trigger the fetchAndDownload function
       downloadBtn.onclick = function () {
         fetchAndDownload(txtPath, query);
       };
@@ -36,18 +37,17 @@ function searchMovie() {
         <h2>No results found for "${query}"</h2>
         <p>Make sure the movie name matches the folder and file structure.</p>
       `;
-      gallery.style.display = "grid";
+      gallery.style.display = "grid";  // Show the gallery again if no result
     };
   } else {
     resultContainer.innerHTML = `
       <h2>No input provided</h2>
       <p>Please enter a movie name to search.</p>
     `;
-    gallery.style.display = "grid";
+    gallery.style.display = "grid";  // Show the gallery if no input was provided
   }
 }
 
-// Fetch the URL from the TXT file and download the linked content
 function fetchAndDownload(txtPath, movieName) {
   fetch(txtPath)
     .then((response) => {
@@ -59,7 +59,6 @@ function fetchAndDownload(txtPath, movieName) {
     .then((downloadUrl) => {
       const trimmedUrl = downloadUrl.trim();
 
-      // Create an <a> element to trigger the download
       const a = document.createElement("a");
       a.href = trimmedUrl;
       a.download = movieName;
@@ -71,10 +70,3 @@ function fetchAndDownload(txtPath, movieName) {
       alert("Error: " + error.message);
     });
 }
-
-document.getElementById("search").addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    searchMovie(); // Call the search function
-    this.blur(); // Close the keyboard on mobile devices
-  }
-});
