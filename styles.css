@@ -124,7 +124,18 @@ header h1 {
   transform: scale(1.1);
 }
 /* Specific Styles for Play with MX Player Button */
-#mx-player-btn {
+#mx-player-btn {display: inline-block;
+  padding: 15px 30px;
+  margin: 20px auto 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease, transform 0.2s ease;
   background-color: #28a745; /* Green color */
 }
 
