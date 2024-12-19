@@ -21,8 +21,6 @@ function searchMovie() {
         <img src="${imagePath}" alt="${query}">
         <br>
         <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
-        <br>
-        <button id="watch-btn" onclick="saveWatchLinkAndRedirect('${txtPath}')">Watch Online</button>
       `;
       gallery.style.display = "none";
     };
