@@ -4,58 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Watch Movie</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #1c1c1e;
-      color: #ffffff;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-
-    h1 {
-      margin-top: 20px;
-      font-size: 2.5rem;
-      color: #e62429;
-    }
-
-    video {
-      margin-top: 20px;
-      max-width: 90%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .error-message {
-      margin-top: 50px;
-      font-size: 1.5rem;
-      color: #ff8080;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Watch Your Movie</h1>
-  <div id="movie-container"></div>
-  <script>
-    // Retrieve the movie link from local storage
-    const watchLink = localStorage.getItem("a");
-
-    if (watchLink) {
-      // If a valid link exists, display the video player
-      document.getElementById("movie-container").innerHTML = `
-        <video controls>
-          <source src="${watchLink}" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      `;
-    } else {
-      // If no link is found, display an error message
-      document.getElementById("movie-container").innerHTML = `
-        <p class="error-message">No movie link found. Please go back and select a movie to watch.</p>
-      `;
-    }
-  </script>
+  <header>
+    <h1>Watch Movie</h1>
+  </header>
+  <main>
+    <video id="movie-player" controls autoplay>
+      <source id="movie-source" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="language-selection">
+      <label for="language">Choose Audio Language:</label>
+      <select id="language" onchange="changeAudioTrack()">
+        <!-- Options will be populated dynamically -->
+      </select>
+    </div>
+  </main>
+  <script src="watch.js"></script>
 </body>
 </html>
