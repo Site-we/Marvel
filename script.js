@@ -1,25 +1,20 @@
-function searchMovieByImage(movieName) {
+function searchMovie(queryFromImage = null) {
   const searchInput = document.getElementById("search");
-  searchInput.value = movieName; // Set the search input value to the full movie name
-  searchMovie(); // Trigger the search
-}
-
-function searchMovie() {
-  const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim(); // Get the user input and trim spaces
+  const query = queryFromImage || searchInput.value.trim(); // Use query from image click or input value
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
   const downloadBtn = document.getElementById("download-btn");
 
-  resultContainer.innerHTML = ""; // Clear previous search results
-  downloadBtn.style.display = "none"; // Hide the download button initially
+  // Clear previous search results
+  resultContainer.innerHTML = "";
+  downloadBtn.style.display = "none";
 
-  if (query === "") {
+  if (!query) {
     // Handle empty input
     searchInput.placeholder = "Please search a movie..."; // Update placeholder text
     searchInput.value = ""; // Clear the input field
-    gallery.style.display = "grid"; // Show the gallery again
+    gallery.style.display = "grid"; // Show the gallery
     return; // Exit the function
   }
 
@@ -55,6 +50,7 @@ function searchMovie() {
   };
 }
 
+// Function to handle download from .txt file
 function fetchAndDownload(txtPath, movieName) {
   fetch(txtPath)
     .then((response) => {
@@ -78,9 +74,18 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
+// Trigger search when pressing Enter
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     searchMovie(); // Call the search function
     this.blur(); // Close the keyboard
   }
+});
+
+// Add click event listeners to gallery images
+document.querySelectorAll(".gallery img").forEach((image) => {
+  image.addEventListener("click", function () {
+    const movieName = this.alt; // Use the alt attribute of the image as the movie name
+    searchMovie(movieName);
+  });
 });
