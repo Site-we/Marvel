@@ -1,17 +1,18 @@
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim(); // Keep original search text
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
+  const query = searchInput.value.trim();  // Get the search query from the input
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase();  // Format the query to match the folder names
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
+  const downloadBtn = document.getElementById("download-btn");
 
   resultContainer.innerHTML = "";
+  downloadBtn.style.display = "none";  // Hide the download button initially
 
   if (formattedQuery) {
     const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
     const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
-
 
     const img = new Image();
     img.src = imagePath;
@@ -20,10 +21,14 @@ function searchMovie() {
       resultContainer.innerHTML = `
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
-        <br>
-        <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
       `;
       gallery.style.display = "none";
+
+      // Show and configure the download button
+      downloadBtn.style.display = "inline-block";
+      downloadBtn.onclick = function () {
+        fetchAndDownload(txtPath, query);
+      };
     };
 
     img.onerror = function () {
@@ -52,7 +57,6 @@ function fetchAndDownload(txtPath, movieName) {
       return response.text();
     })
     .then((downloadUrl) => {
-      // Trim the URL and initiate a download
       const trimmedUrl = downloadUrl.trim();
 
       const a = document.createElement("a");
@@ -67,9 +71,16 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
+// Handle the search when an image is clicked
+function searchMovieByImage(movieName) {
+  const searchInput = document.getElementById("search");
+  searchInput.value = movieName;  // Set the search input value to the movie name
+  searchMovie();  // Trigger the search
+}
+
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    searchMovie(); // Call the search function
-    this.blur(); // Close the keyboard
+    searchMovie();  // Call the search function on pressing Enter
+    this.blur();  // Close the keyboard on mobile devices
   }
 });
