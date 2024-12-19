@@ -12,14 +12,14 @@ function searchMovie() {
   const gallery = document.getElementById("gallery");
   const downloadBtn = document.getElementById("download-btn");
 
-  resultContainer.innerHTML = "";
+  resultContainer.innerHTML = ""; // Clear previous search results
   downloadBtn.style.display = "none"; // Hide the download button initially
 
   if (query === "") {
-    // No input case
-    searchInput.placeholder = "Please search a movie..."; // Change the placeholder text
-    searchInput.value = ""; // Clear the input field if it has whitespace
-    gallery.style.display = "grid"; // Show the gallery
+    // Handle empty input
+    searchInput.placeholder = "Please search a movie..."; // Update placeholder text
+    searchInput.value = ""; // Clear the input field
+    gallery.style.display = "grid"; // Show the gallery again
     return; // Exit the function
   }
 
@@ -31,11 +31,12 @@ function searchMovie() {
   img.src = imagePath;
 
   img.onload = function () {
+    // Display search result
     resultContainer.innerHTML = `
       <h2>Result for "${query}"</h2>
       <img src="${imagePath}" alt="${query}">
     `;
-    gallery.style.display = "none";
+    gallery.style.display = "none"; // Hide the gallery
 
     // Show and configure the download button
     downloadBtn.style.display = "inline-block";
@@ -45,11 +46,12 @@ function searchMovie() {
   };
 
   img.onerror = function () {
+    // Handle invalid search
     resultContainer.innerHTML = `
       <h2>No results found for "${query}"</h2>
       <p>Make sure the movie name matches the folder and file structure.</p>
     `;
-    gallery.style.display = "grid";
+    gallery.style.display = "grid"; // Show the gallery again
   };
 }
 
