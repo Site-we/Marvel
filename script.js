@@ -21,7 +21,7 @@ function searchMovie() {
         <img src="${imagePath}" alt="${query}">
         <br>
         <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
-        <button id="watch-btn" onclick="saveToVideoFile('${txtPath}')">Watch Online</button>
+        <button id="watch-btn" onclick="saveWatchLinkAndRedirect('${txtPath}')">Watch Online</button>
       `;
       gallery.style.display = "none";
     };
@@ -55,7 +55,6 @@ function fetchAndDownload(txtPath, movieName) {
       return response.text();
     })
     .then((downloadUrl) => {
-      // Trim the URL and initiate a download
       const trimmedUrl = downloadUrl.trim();
 
       const a = document.createElement("a");
@@ -70,28 +69,19 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
-// Save the link from the movie's TXT file to a video.txt file
-function saveToVideoFile(txtPath) {
+// Save the watch link to local storage and redirect to watch.html
+function saveWatchLinkAndRedirect(txtPath) {
   fetch(txtPath)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Could not fetch the link.");
+        throw new Error("Could not fetch the watch link.");
       }
       return response.text();
     })
-    .then((videoUrl) => {
-      const link = videoUrl.trim();
-      const blob = new Blob([link], { type: "text/plain" });
-
-      // Create a link element to download the video.txt file
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "video.txt"; // Save as video.txt in the root directory
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      alert("Link saved to video.txt successfully!");
+    .then((watchUrl) => {
+      const trimmedUrl = watchUrl.trim();
+      localStorage.setItem("a", trimmedUrl); // Save the link to local storage
+      window.location.href = "watch.html"; // Redirect to watch.html
     })
     .catch((error) => {
       alert("Error: " + error.message);
