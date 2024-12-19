@@ -1,7 +1,7 @@
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim(); // Keep original search text
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
+  const query = searchInput.value.trim();
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase();
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
@@ -21,6 +21,7 @@ function searchMovie() {
         <img src="${imagePath}" alt="${query}">
         <br>
         <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
+        <br>
         <button id="watch-btn" onclick="saveWatchLinkAndRedirect('${txtPath}')">Watch Online</button>
       `;
       gallery.style.display = "none";
@@ -41,17 +42,13 @@ function searchMovie() {
     gallery.style.display = "grid";
   }
 
-  // Clear the search input after performing the search
-  searchInput.value = ''; // Clear the search bar
+  searchInput.value = '';
 }
 
-// Fetch the URL from the TXT file and download the linked content
 function fetchAndDownload(txtPath, movieName) {
   fetch(txtPath)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Could not fetch the download link.");
-      }
+      if (!response.ok) throw new Error("Could not fetch the download link.");
       return response.text();
     })
     .then((downloadUrl) => {
@@ -69,36 +66,25 @@ function fetchAndDownload(txtPath, movieName) {
     });
 }
 
-// Save the watch link to local storage and redirect to watch.html
 function saveWatchLinkAndRedirect(txtPath) {
   fetch(txtPath)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("Could not fetch the watch link.");
-      }
+      if (!response.ok) throw new Error("Could not fetch the watch link.");
       return response.text();
     })
     .then((watchUrl) => {
       const trimmedUrl = watchUrl.trim();
-      localStorage.setItem("a", trimmedUrl); // Save the link to local storage
-      window.location.href = "watch.html"; // Redirect to watch.html
+      localStorage.setItem("a", trimmedUrl);
+      window.location.href = "watch.html";
     })
     .catch((error) => {
       alert("Error: " + error.message);
     });
 }
 
-// Search when clicking on an image in the gallery
-function searchMovieByImage(movieName) {
-  const searchInput = document.getElementById("search");
-  searchInput.value = movieName; // Set the movie name into the search input
-
-  searchMovie(); // Trigger the search function
-}
-
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
-    searchMovie(); // Call the search function
-    this.blur(); // Close the keyboard
+    searchMovie();
+    this.blur();
   }
 });
