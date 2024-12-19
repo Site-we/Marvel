@@ -6,15 +6,15 @@ function searchMovie(queryFromImage = null) {
   const gallery = document.getElementById("gallery");
   const downloadBtn = document.getElementById("download-btn");
 
-  // Clear previous search results
-  resultContainer.innerHTML = "";
-  downloadBtn.style.display = "none";
+  // Reset previous results and state
+  resultContainer.innerHTML = ""; // Clear previous search results
+  downloadBtn.style.display = "none"; // Hide the download button initially
+  gallery.style.display = "grid"; // Ensure the gallery is visible for new searches if no match
 
   if (!query) {
     // Handle empty input
     searchInput.placeholder = "Please search a movie..."; // Update placeholder text
     searchInput.value = ""; // Clear the input field
-    gallery.style.display = "grid"; // Show the gallery
     return; // Exit the function
   }
 
@@ -48,6 +48,9 @@ function searchMovie(queryFromImage = null) {
     `;
     gallery.style.display = "grid"; // Show the gallery again
   };
+
+  // Reset search input for new searches
+  searchInput.value = "";
 }
 
 // Function to handle download from .txt file
