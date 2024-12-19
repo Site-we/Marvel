@@ -1,17 +1,18 @@
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim(); // Keep original search text
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
+  const query = searchInput.value.trim();
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase();
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
+  const downloadBtn = document.getElementById("download-btn");
 
   resultContainer.innerHTML = "";
+  downloadBtn.style.display = "none"; // Hide the button initially
 
   if (formattedQuery) {
     const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
     const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
-
 
     const img = new Image();
     img.src = imagePath;
@@ -20,10 +21,14 @@ function searchMovie() {
       resultContainer.innerHTML = `
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
-        <br>
-        <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
       `;
       gallery.style.display = "none";
+
+      // Show and configure the download button
+      downloadBtn.style.display = "inline-block";
+      downloadBtn.onclick = function () {
+        fetchAndDownload(txtPath, query);
+      };
     };
 
     img.onerror = function () {
@@ -42,7 +47,6 @@ function searchMovie() {
   }
 }
 
-// Fetch the URL from the TXT file and download the linked content
 function fetchAndDownload(txtPath, movieName) {
   fetch(txtPath)
     .then((response) => {
@@ -52,7 +56,6 @@ function fetchAndDownload(txtPath, movieName) {
       return response.text();
     })
     .then((downloadUrl) => {
-      // Trim the URL and initiate a download
       const trimmedUrl = downloadUrl.trim();
 
       const a = document.createElement("a");
@@ -66,10 +69,3 @@ function fetchAndDownload(txtPath, movieName) {
       alert("Error: " + error.message);
     });
 }
-
-document.getElementById("search").addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    searchMovie(); // Call the search function
-    this.blur(); // Close the keyboard
-  }
-});
