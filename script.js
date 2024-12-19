@@ -21,6 +21,7 @@ function searchMovie() {
         <img src="${imagePath}" alt="${query}">
         <br>
         <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
+        <button id="watch-btn" onclick="saveToVideoFile('${txtPath}')">Watch Online</button>
       `;
       gallery.style.display = "none";
     };
@@ -41,7 +42,7 @@ function searchMovie() {
   }
 
   // Clear the search input after performing the search
-  searchInput.value = '';  // Clear the search bar
+  searchInput.value = ''; // Clear the search bar
 }
 
 // Fetch the URL from the TXT file and download the linked content
@@ -63,6 +64,34 @@ function fetchAndDownload(txtPath, movieName) {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+    })
+    .catch((error) => {
+      alert("Error: " + error.message);
+    });
+}
+
+// Save the link from the movie's TXT file to a video.txt file
+function saveToVideoFile(txtPath) {
+  fetch(txtPath)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch the link.");
+      }
+      return response.text();
+    })
+    .then((videoUrl) => {
+      const link = videoUrl.trim();
+      const blob = new Blob([link], { type: "text/plain" });
+
+      // Create a link element to download the video.txt file
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "video.txt"; // Save as video.txt in the root directory
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      alert("Link saved to video.txt successfully!");
     })
     .catch((error) => {
       alert("Error: " + error.message);
