@@ -137,6 +137,7 @@ header h1 {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   transition: background-color 0.3s ease, transform 0.2s ease;
   background-color: #28a745; /* Green color */
+  margin-bottom: 50px;
 }
 
 #mx-player-btn:hover {
