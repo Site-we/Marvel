@@ -26,25 +26,24 @@ header h1 {
 .search-container {
   margin: 20px 0;
   display: flex;
-  flex-wrap: wrap; /* Allows the button to wrap below input on smaller screens */
-  justify-content: center; /* Center-align in case of wrapping */
-  gap: 15px; /* Adds spacing between the input and button */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
 }
 
 .search-container input {
-  width: 85%; /* Wider search box */
+  width: 85%;
   max-width: 700px;
   padding: 12px 15px;
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  outline: none; /* Removes the black strip around the box */
-  margin-bottom: 10px; /* Adds spacing below the search box */
+  outline: none;
 }
 
 .search-container input:focus {
-  box-shadow: 0px 0px 8px rgba(230, 36, 41, 0.8); /* Optional focus effect */
+  box-shadow: 0px 0px 8px rgba(230, 36, 41, 0.8);
 }
 
 .search-container button {
@@ -107,7 +106,7 @@ header h1 {
 #download-btn {
   display: inline-block;
   padding: 15px 30px;
-  margin: 20px auto 40px; /* Added bottom margin to create space */
+  margin: 20px auto 15px;
   font-size: 1.2rem;
   font-weight: bold;
   color: #ffffff;
@@ -125,9 +124,24 @@ header h1 {
   transform: scale(1.1);
 }
 
-/* Responsive Adjustments */
-@media (min-width: 768px) {
-  .gallery {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
+/* Watch Online Button Styles */
+#watch-btn {
+  display: inline-block;
+  padding: 15px 30px;
+  margin: 15px auto 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#watch-btn:hover {
+  background-color: #218838;
+  transform: scale(1.1);
 }
