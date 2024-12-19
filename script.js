@@ -1,14 +1,20 @@
+function searchMovieByImage(movieName) {
+  const searchInput = document.getElementById("search");
+  searchInput.value = movieName; // Set the search input value to the full movie name
+  searchMovie(); // Trigger the search
+}
+
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim();
-  const formattedQuery = query.replace(/\s+/g, "").toLowerCase();
+  const query = searchInput.value.trim(); // Get the full movie name (e.g., "Iron Man")
+  const formattedQuery = query.replace(/\s+/g, "").toLowerCase(); // Format it for folder/file paths
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
   const downloadBtn = document.getElementById("download-btn");
 
   resultContainer.innerHTML = "";
-  downloadBtn.style.display = "none"; // Hide the button initially
+  downloadBtn.style.display = "none"; // Hide the download button initially
 
   if (formattedQuery) {
     const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
@@ -69,3 +75,10 @@ function fetchAndDownload(txtPath, movieName) {
       alert("Error: " + error.message);
     });
 }
+
+document.getElementById("search").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    searchMovie(); // Call the search function
+    this.blur(); // Close the keyboard
+  }
+});
