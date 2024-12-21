@@ -76,12 +76,16 @@ function playWithMXPlayer(txtPath) {
       return response.text();
     })
     .then((streamUrl) => {
-      // Trim the URL and launch MX Player
-      const trimmedUrl = streamUrl.trim();
-      window.location.href = `intent:${trimmedUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=Stream Video;end;`;
+      const trimmedUrl = streamUrl.trim(); // Trim whitespace from the URL
+
+      // Construct the intent URL without the fallback to Play Store
+      const mxPlayerLink = `intent:${trimmedUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=Stream Video;end;`;
+
+      // Redirect to MX Player
+      window.location.href = mxPlayerLink;
     })
     .catch((error) => {
-      alert("Error: " + error.message);
+      alert("Error: " + error.message); // Inform the user if the link couldn't be fetched
     });
 }
 
