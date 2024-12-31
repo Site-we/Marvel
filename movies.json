@@ -1,5 +1,4 @@
-{
-  "movies": [
+[
     {
       "name": "Iron Man",
       "keywords": ["iron man", "iron man 1"]
@@ -116,5 +115,4 @@
       "name": "Black Panther: Wakanda Forever",
       "keywords": ["black panther 2", "wakanda forever"]
     }
-  ]
-}
+]
