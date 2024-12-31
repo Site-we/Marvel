@@ -144,11 +144,16 @@
       document.body.removeChild(textarea);
     }
 
-    // Function to open the URL in MX Player (using www.mxplayer.in)
+    // Function to open the URL in MX Player (Android only)
     function openInMXPlayer(url) {
-      // Open MX Player website with the streaming URL
-      const mxPlayerUrl = `https://www.mxplayer.in/?url=${encodeURIComponent(url)}`;
-      window.location.href = mxPlayerUrl;
+      if (navigator.userAgent.toLowerCase().includes("android")) {
+        // For Android, we use the Intent URL scheme (this may not work in all browsers)
+        const mxPlayerUrl = `intent://${url}#Intent;package=com.mxtech.videoplayer.ad;scheme=http;end;`;
+        window.location.href = mxPlayerUrl;
+      } else {
+        // For non-Android, open the URL in a new tab (fallback)
+        window.open(url, '_blank');
+      }
     }
   </script>
 </body>
