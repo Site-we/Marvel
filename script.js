@@ -1,6 +1,6 @@
-// Load movies from JSON file
 let movies = [];
 
+// Load movies from JSON file
 fetch('movies.json')
   .then(response => {
     if (!response.ok) {
@@ -10,42 +10,25 @@ fetch('movies.json')
   })
   .then(data => {
     movies = data; // Save loaded movies
-    loadGallery();  // Load the gallery images after data is loaded
   })
   .catch(error => {
     console.error("Error loading movies.json:", error);
   });
 
-// Load all movie images dynamically
-function loadGallery() {
-  const gallery = document.getElementById("gallery");
-  gallery.innerHTML = ''; // Clear previous gallery content
-  
-  movies.forEach(movie => {
-    const movieImage = document.createElement("img");
-    movieImage.src = `Movies/${movie.name.toLowerCase()}/${movie.name.toLowerCase()}.jpg`;
-    movieImage.alt = movie.name;
-    movieImage.onclick = function () {
-      searchMovieByImage(movie.name);
-    };
-    gallery.appendChild(movieImage);
-  });
-}
-
 // Search for the movie
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  const query = searchInput.value.trim(); // Keep original search text
-  const formattedQuery = normalizeString(query); // Format query for comparison
+  let query = searchInput.value.trim(); // Get the input text and trim whitespace
+  query = formatMovieName(query); // Format the movie name to match the file structure
 
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
 
   resultContainer.innerHTML = ""; // Clear previous results
 
-  if (formattedQuery) {
-    const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
-    const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
+  if (query) {
+    const imagePath = `Movies/${query}/${query}.jpg`;
+    const txtPath = `Movies/${query}/${query}.txt`;
 
     const img = new Image();
     img.src = imagePath;
@@ -56,11 +39,11 @@ function searchMovie() {
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
         <br>
-        <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
+        <button id="download-btn" onclick="redirectToDownload('${query}')">Download</button>
         <br>
-        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
+        <button id="mx-player-btn" onclick="redirectToMXPlayer('${query}')">Play with MX Player</button>
       `;
-
+      
       // Animate the search results
       resultContainer.style.display = "block";  // Show the result container
       resultContainer.classList.add("fade-in"); // Add animation class
@@ -124,6 +107,11 @@ function fuzzyMatch(input, keyword) {
   return normalizeString(input).includes(normalizeString(keyword));
 }
 
+// Function to format the movie name, e.g., remove spaces or standardize the name
+function formatMovieName(query) {
+  return query.replace(/\s+/g, '').toLowerCase();  // Remove spaces and make lowercase
+}
+
 // Search by image or programmatically fill input and search
 function searchMovieByImage(movieName) {
   const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
@@ -146,8 +134,6 @@ function searchMovieByImage(movieName) {
       <br>
       <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
     `;
-
-    // Animate the search results
     resultContainer.style.display = "block";  // Show the result container
     resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "none"; // Hide the gallery
@@ -158,8 +144,6 @@ function searchMovieByImage(movieName) {
       <h2>No results found for "${movieName}"</h2>
       <p>Make sure the movie name matches the folder and file structure.</p>
     `;
-    resultContainer.style.display = "block";  // Show the result container
-    resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "grid"; // Show the gallery
   };
 }
