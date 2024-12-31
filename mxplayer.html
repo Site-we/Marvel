@@ -4,11 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MX Player</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Play Movie with MX Player</h1>
+  <header>
+    <h1>Play Movie with MX Player</h1>
+  </header>
+
   <div id="movie-info">
-    <!-- Movie details will go here -->
+    <h2>Choose Movie Quality</h2>
+    <button id="download-480p" onclick="fetchAndPlay('480')">Play 480p</button>
+    <button id="download-720p" onclick="fetchAndPlay('720')">Play 720p</button>
+    <button id="download-1080p" onclick="fetchAndPlay('1080')">Play 1080p</button>
   </div>
 
   <script>
@@ -16,28 +23,60 @@
       const folderName = localStorage.getItem("movieFolderName"); // Get folder name from localStorage
 
       if (folderName) {
-        // You can use the folderName to build the video URL or path to fetch the streaming link
-        const txtPath = `Movies/${folderName}/${folderName}.txt`;
-
-        fetch(txtPath)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error("Could not fetch the streaming link.");
-            }
-            return response.text();
-          })
-          .then(streamingUrl => {
-            const trimmedUrl = streamingUrl.trim();
-            // Open the video link with MX Player or another player
-            window.open(trimmedUrl, "_blank"); // Or you can embed the player on the page if needed
-          })
-          .catch(error => {
-            alert("Error: " + error.message);
-          });
+        document.getElementById('movie-info').style.display = 'block'; // Show the quality buttons
       } else {
         alert("No movie folder found in local storage.");
       }
     };
+
+    // Fetch the download link from the .txt file and open the streaming URL in MX Player
+    function fetchAndPlay(quality) {
+      const folderName = localStorage.getItem("movieFolderName");
+      const txtPath = `Movies/${folderName}/${folderName}-${quality}.txt`;
+
+      fetch(txtPath)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Could not fetch the streaming link.");
+          }
+          return response.text();
+        })
+        .then(streamingUrl => {
+          const trimmedUrl = streamingUrl.trim();
+
+          // Copy the URL to clipboard (if required)
+          copyToClipboard(trimmedUrl);
+
+          // Open the URL in MX Player app (via Intent on mobile platforms)
+          openInMXPlayer(trimmedUrl);
+        })
+        .catch(error => {
+          alert("Error: " + error.message);
+        });
+    }
+
+    // Function to copy the URL to clipboard
+    function copyToClipboard(url) {
+      const textArea = document.createElement("textarea");
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      alert("Download link copied to clipboard.");
+    }
+
+    // Function to open the URL in MX Player (assuming MX Player is available)
+    function openInMXPlayer(url) {
+      if (navigator.userAgent.toLowerCase().includes("android")) {
+        // For Android, we use the Intent URL scheme (this may not work in all browsers)
+        const mxPlayerUrl = `intent://${url}#Intent;package=com.mxtech.videoplayer.ad;scheme=http;end;`;
+        window.location.href = mxPlayerUrl;
+      } else {
+        // For non-Android, attempt to open in a new tab or handle differently
+        window.open(url, '_blank');
+      }
+    }
   </script>
 </body>
 </html>
