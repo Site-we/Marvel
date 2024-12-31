@@ -46,10 +46,10 @@ function searchMovie() {
       resultContainer.classList.add("fade-in");  // Apply fade-in animation class
       gallery.style.display = "none"; // Hide the gallery
 
-      // Optional: You can remove the class after animation duration to reset
-      setTimeout(() => {
-        resultContainer.classList.remove("fade-in");
-      }, 1000);
+      // Listen for the end of the transition and remove the class
+      resultContainer.addEventListener("transitionend", function () {
+        resultContainer.classList.remove("fade-in"); // Remove after transition ends
+      });
     };
 
     img.onerror = function () {
@@ -130,10 +130,10 @@ function searchMovieByImage(movieName) {
     resultContainer.classList.add("fade-in");  // Apply fade-in animation class
     gallery.style.display = "none"; // Hide the gallery
 
-    // Optional: You can remove the class after animation duration to reset
-    setTimeout(() => {
-      resultContainer.classList.remove("fade-in");
-    }, 1000);
+    // Listen for the end of the transition and remove the class
+    resultContainer.addEventListener("transitionend", function () {
+      resultContainer.classList.remove("fade-in"); // Remove after transition ends
+    });
   };
 
   img.onerror = function () {
