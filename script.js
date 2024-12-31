@@ -167,11 +167,3 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     this.blur(); // Close the keyboard
   }
 });
-
-// Refresh page when back button is pressed
-window.addEventListener('popstate', function() {
-  window.location.reload();  // Reload the page when user navigates back
-});
-
-// This ensures that the page refreshes when the back button is pressed
-history.pushState({}, null, window.location.href); // Push initial state to history so that popstate can be triggered
