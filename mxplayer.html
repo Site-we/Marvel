@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MX Player</title>
+</head>
+<body>
+  <h1>Play Movie with MX Player</h1>
+  <div id="movie-info">
+    <!-- Movie details will go here -->
+  </div>
+
+  <script>
+    window.onload = function() {
+      const folderName = localStorage.getItem("movieFolderName"); // Get folder name from localStorage
+
+      if (folderName) {
+        // You can use the folderName to build the video URL or path to fetch the streaming link
+        const txtPath = `Movies/${folderName}/${folderName}.txt`;
+
+        fetch(txtPath)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Could not fetch the streaming link.");
+            }
+            return response.text();
+          })
+          .then(streamingUrl => {
+            const trimmedUrl = streamingUrl.trim();
+            // Open the video link with MX Player or another player
+            window.open(trimmedUrl, "_blank"); // Or you can embed the player on the page if needed
+          })
+          .catch(error => {
+            alert("Error: " + error.message);
+          });
+      } else {
+        alert("No movie folder found in local storage.");
+      }
+    };
+  </script>
+</body>
+</html>
