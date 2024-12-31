@@ -10,7 +10,7 @@ body {
 
 /* Header Styles */
 header {
-  background-image: url('https://www.example.com/marvel-background.jpg'); /* Set your own background image for header */
+  background-image: url('Images/Header.jpg'); /* Set your own background image for header */
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
