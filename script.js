@@ -1,3 +1,4 @@
+// Search for the movie
 function searchMovie() {
   const searchInput = document.getElementById("search");
   const query = searchInput.value.trim(); // Keep original search text
@@ -55,6 +56,31 @@ function redirectToDownload(folderName) {
   window.location.href = "download.html"; // Redirect to download.html
 }
 
+// Fetch the URL from the TXT file and download the linked content
+function fetchAndDownload(txtPath, movieName) {
+  fetch(txtPath)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch the download link.");
+      }
+      return response.text();
+    })
+    .then((downloadUrl) => {
+      // Trim the URL and initiate a download
+      const trimmedUrl = downloadUrl.trim();
+
+      const a = document.createElement("a");
+      a.href = trimmedUrl;
+      a.download = movieName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    })
+    .catch((error) => {
+      alert("Error: " + error.message);
+    });
+}
+
 // Play the video with MX Player using the link from the TXT file
 function playWithMXPlayer(txtPath) {
   fetch(txtPath)
@@ -72,3 +98,26 @@ function playWithMXPlayer(txtPath) {
       alert("Error: " + error.message);
     });
 }
+
+// Event listener for gallery image clicks
+function searchMovieByImage(movieName) {
+  const searchInput = document.getElementById("search");
+  searchInput.value = movieName; // Fill the search bar with the movie name
+  searchMovie(); // Trigger the search functionality
+}
+
+// Detect back button press and refresh the page
+window.addEventListener('popstate', function () {
+  location.reload(); // Refresh the page
+});
+
+// Optional: Push a state to history when the page loads, to detect back action
+window.history.pushState({}, document.title, window.location.href);
+
+// Search on pressing Enter key
+document.getElementById("search").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    searchMovie(); // Call the search function
+    this.blur(); // Close the keyboard
+  }
+});
