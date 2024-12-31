@@ -80,12 +80,8 @@ function fallbackSearch(query, resultContainer, gallery) {
   });
 
   if (matchedMovie) {
-    resultContainer.innerHTML = `
-      <h2>Did you mean "${matchedMovie.name}"?</h2>
-      <p>Showing closest match for your search.</p>
-      <button onclick="searchMovieByImage('${matchedMovie.name}')">Search Again</button>
-    `;
-    gallery.style.display = "none"; // Hide the gallery
+    // Automatically search for the matched movie
+    searchMovieByImage(matchedMovie.name);
   } else {
     resultContainer.innerHTML = `
       <h2>No results found for "${query}"</h2>
@@ -105,6 +101,40 @@ function fuzzyMatch(input, keyword) {
   return normalizeString(input).includes(normalizeString(keyword));
 }
 
+// Search by image or programmatically fill input and search
+function searchMovieByImage(movieName) {
+  const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
+  const resultContainer = document.getElementById("search-result");
+  const gallery = document.getElementById("gallery");
+
+  const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
+  const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
+
+  const img = new Image();
+  img.src = imagePath;
+
+  img.onload = function () {
+    // Add search result with buttons
+    resultContainer.innerHTML = `
+      <h2>Result for "${movieName}"</h2>
+      <img src="${imagePath}" alt="${movieName}">
+      <br>
+      <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
+      <br>
+      <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
+    `;
+    gallery.style.display = "none"; // Hide the gallery
+  };
+
+  img.onerror = function () {
+    resultContainer.innerHTML = `
+      <h2>No results found for "${movieName}"</h2>
+      <p>Make sure the movie name matches the folder and file structure.</p>
+    `;
+    gallery.style.display = "grid"; // Show the gallery
+  };
+}
+
 // Redirect to download.html with the folder name stored in local storage
 function redirectToDownload(folderName) {
   localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
@@ -115,24 +145,6 @@ function redirectToDownload(folderName) {
 function redirectToMXPlayer(folderName) {
   localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
   window.location.href = "mxplayer.html"; // Redirect to mxplayer.html
-}
-
-// Play the video with MX Player using the link from the TXT file
-function playWithMXPlayer(txtPath) {
-  fetch(txtPath)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Could not fetch the streaming link.");
-      }
-      return response.text();
-    })
-    .then((streamingUrl) => {
-      const trimmedUrl = streamingUrl.trim();
-      window.open(trimmedUrl, "_blank"); // Open the link in a new tab (replace with MX Player integration if needed)
-    })
-    .catch((error) => {
-      alert("Error: " + error.message);
-    });
 }
 
 // Search on pressing Enter key
