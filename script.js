@@ -34,7 +34,7 @@ function searchMovie() {
     img.src = imagePath;
 
     img.onload = function () {
-      // Add search result with buttons
+      // Add search result with buttons and apply animation class
       resultContainer.innerHTML = `
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
@@ -43,7 +43,13 @@ function searchMovie() {
         <br>
         <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
       `;
+      resultContainer.classList.add("fade-in");  // Apply fade-in animation class
       gallery.style.display = "none"; // Hide the gallery
+
+      // Optional: You can remove the class after animation duration to reset
+      setTimeout(() => {
+        resultContainer.classList.remove("fade-in");
+      }, 1000);
     };
 
     img.onerror = function () {
@@ -112,7 +118,7 @@ function searchMovieByImage(movieName) {
   img.src = imagePath;
 
   img.onload = function () {
-    // Add search result with buttons
+    // Add search result with buttons and apply animation class
     resultContainer.innerHTML = `
       <h2>Result for "${movieName}"</h2>
       <img src="${imagePath}" alt="${movieName}">
@@ -121,7 +127,13 @@ function searchMovieByImage(movieName) {
       <br>
       <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
     `;
+    resultContainer.classList.add("fade-in");  // Apply fade-in animation class
     gallery.style.display = "none"; // Hide the gallery
+
+    // Optional: You can remove the class after animation duration to reset
+    setTimeout(() => {
+      resultContainer.classList.remove("fade-in");
+    }, 1000);
   };
 
   img.onerror = function () {
