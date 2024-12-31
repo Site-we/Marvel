@@ -10,47 +10,39 @@ fetch('movies.json')
   })
   .then(data => {
     movies = data; // Save loaded movies
-    displayMovies(); // Display movies on the main page
+    displayMovies(); // Display the movies on the main page after loading the data
   })
   .catch(error => {
     console.error("Error loading movies.json:", error);
   });
 
-// Display movie images on the main page
+// Display all movie images on the main page
 function displayMovies() {
   const gallery = document.getElementById("gallery");
+  gallery.innerHTML = ''; // Clear any existing gallery content
 
-  // Clear the gallery before adding new movies
-  gallery.innerHTML = '';
-
-  // Loop through the movies and create images for the gallery
-  movies.forEach(movie => {
-    const img = document.createElement('img');
-    img.src = `Movies/${movie.name.toLowerCase().replace(/\s+/g, '')}/${movie.name.toLowerCase().replace(/\s+/g, '')}.jpg`;
-    img.alt = movie.name;
-    img.onclick = function() {
-      searchMovieByImage(movie.name); // Search when the image is clicked
-    };
-    
-    // Append the image to the gallery
-    gallery.appendChild(img);
+  movies.forEach((movie) => {
+    const imgElement = document.createElement("img");
+    imgElement.src = `Movies/${movie.name.replace(/\s+/g, "").toLowerCase()}/${movie.name.replace(/\s+/g, "").toLowerCase()}.jpg`;
+    imgElement.alt = movie.name;
+    imgElement.onclick = () => searchMovieByImage(movie.name);
+    gallery.appendChild(imgElement);
   });
 }
 
 // Search for the movie
 function searchMovie() {
   const searchInput = document.getElementById("search");
-  let query = searchInput.value.trim(); // Get the input text and trim whitespace
-  query = formatMovieName(query); // Format the movie name to match the file structure
-
+  const query = searchInput.value.trim(); // Keep original search text
   const resultContainer = document.getElementById("search-result");
   const gallery = document.getElementById("gallery");
 
   resultContainer.innerHTML = ""; // Clear previous results
 
   if (query) {
-    const imagePath = `Movies/${query}/${query}.jpg`;
-    const txtPath = `Movies/${query}/${query}.txt`;
+    const formattedQuery = query.replace(/\s+/g, "").toLowerCase();
+    const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
+    const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
 
     const img = new Image();
     img.src = imagePath;
@@ -61,14 +53,10 @@ function searchMovie() {
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
         <br>
-        <button id="download-btn" onclick="redirectToDownload('${query}')">Download</button>
+        <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
         <br>
-        <button id="mx-player-btn" onclick="redirectToMXPlayer('${query}')">Play with MX Player</button>
+        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
       `;
-      
-      // Animate the search results
-      resultContainer.style.display = "block";  // Show the result container
-      resultContainer.classList.add("fade-in"); // Add animation class
       gallery.style.display = "none"; // Hide the gallery
     };
 
@@ -82,8 +70,6 @@ function searchMovie() {
       <h2>No input provided</h2>
       <p>Please enter a movie name to search.</p>
     `;
-    resultContainer.style.display = "block";  // Show the result container
-    resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "grid"; // Show the gallery
   }
 
@@ -93,15 +79,14 @@ function searchMovie() {
 
 // Fallback logic for alternative search
 function fallbackSearch(query, resultContainer, gallery) {
-  const normalizedQuery = normalizeString(query);
   let matchedMovie = null;
 
   // Search through the loaded movies dataset
   movies.forEach((movie) => {
     movie.keywords.forEach((keyword) => {
-      // Check if the normalized keyword matches the normalized query
-      if (fuzzyMatch(normalizedQuery, normalizeString(keyword))) {
-        matchedMovie = movie;
+      // Directly compare the query with the keyword (no normalization)
+      if (fuzzyMatch(query, keyword)) {
+        matchedMovie = movie; // Set matched movie if a match is found
       }
     });
   });
@@ -114,7 +99,7 @@ function fallbackSearch(query, resultContainer, gallery) {
       <h2>No results found for "${query}"</h2>
       <p>Make sure the movie name matches the folder and file structure.</p>
     `;
-    resultContainer.style.display = "block";  // Show the result container
+    resultContainer.style.display = "block"; // Show the result container
     resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "grid"; // Show the gallery
   }
@@ -127,12 +112,7 @@ function normalizeString(str) {
 
 // Fuzzy match function to check if a keyword is part of the search input
 function fuzzyMatch(input, keyword) {
-  return normalizeString(input).includes(normalizeString(keyword));
-}
-
-// Function to format the movie name, e.g., remove spaces or standardize the name
-function formatMovieName(query) {
-  return query.replace(/\s+/g, '').toLowerCase();  // Remove spaces and make lowercase
+  return input.toLowerCase().includes(keyword.toLowerCase());
 }
 
 // Search by image or programmatically fill input and search
@@ -148,7 +128,6 @@ function searchMovieByImage(movieName) {
   img.src = imagePath;
 
   img.onload = function () {
-    // Add search result with buttons
     resultContainer.innerHTML = `
       <h2>Result for "${movieName}"</h2>
       <img src="${imagePath}" alt="${movieName}">
@@ -157,8 +136,6 @@ function searchMovieByImage(movieName) {
       <br>
       <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
     `;
-    resultContainer.style.display = "block";  // Show the result container
-    resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "none"; // Hide the gallery
   };
 
