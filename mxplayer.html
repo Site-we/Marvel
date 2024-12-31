@@ -75,9 +75,9 @@
   <h1 id="movie-title">Play Movie with MX Player</h1>
   <img id="movie-poster" class="movie-poster" src="" alt="Movie Poster" style="display: none;">
   <div class="button-container">
-    <button id="play-480p" onclick="copyAndOpenMXPlayer('480p')" style="display: none;">Play 480p</button>
-    <button id="play-720p" onclick="copyAndOpenMXPlayer('720p')" style="display: none;">Play 720p</button>
-    <button id="play-1080p" onclick="copyAndOpenMXPlayer('1080p')" style="display: none;">Play 1080p</button>
+    <button id="play-480p" onclick="playMovie('480p')" style="display: none;">Play 480p</button>
+    <button id="play-720p" onclick="playMovie('720p')" style="display: none;">Play 720p</button>
+    <button id="play-1080p" onclick="playMovie('1080p')" style="display: none;">Play 1080p</button>
   </div>
   <p class="placeholder" id="placeholder">No movie selected. Please go back and select a movie.</p>
 
@@ -105,8 +105,8 @@
       document.getElementById("placeholder").style.display = "none";
     }
 
-    // Function to fetch the streaming link and open MX Player
-    function copyAndOpenMXPlayer(quality) {
+    // Function to fetch the streaming link and open in MX Player
+    function playMovie(quality) {
       if (!movieFolderName) {
         alert("No movie selected.");
         return;
@@ -124,9 +124,8 @@
           return response.text();
         })
         .then((streamingUrl) => {
-          // Trim the URL and copy it to clipboard, then open MX Player
+          // Trim the URL and play it with MX Player
           const trimmedUrl = streamingUrl.trim();
-          copyToClipboard(trimmedUrl);
           openInMXPlayer(trimmedUrl);
         })
         .catch((error) => {
@@ -134,25 +133,14 @@
         });
     }
 
-    // Function to copy the URL to clipboard
-    function copyToClipboard(url) {
-      const textarea = document.createElement("textarea");
-      textarea.value = url;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      alert("Download link copied to clipboard!");
-    }
-
-    // Function to open the URL in MX Player (Android only)
+    // Function to open the URL in MX Player (assuming MX Player is available)
     function openInMXPlayer(url) {
       if (navigator.userAgent.toLowerCase().includes("android")) {
         // For Android, we use the Intent URL scheme (this may not work in all browsers)
         const mxPlayerUrl = `intent://${url}#Intent;package=com.mxtech.videoplayer.ad;scheme=http;end;`;
         window.location.href = mxPlayerUrl;
       } else {
-        // For non-Android, open the URL in a new tab (fallback)
+        // For non-Android, attempt to open in a new tab or handle differently
         window.open(url, '_blank');
       }
     }
