@@ -58,6 +58,9 @@ function searchMovie() {
         <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
       `;
       gallery.style.display = "none"; // Hide the gallery
+
+      // Apply fade-in animation to the search result
+      resultContainer.classList.add("fade-in");
     };
 
     img.onerror = function () {
@@ -137,6 +140,9 @@ function searchMovieByImage(movieName) {
       <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
     `;
     gallery.style.display = "none"; // Hide the gallery
+
+    // Apply fade-in animation to the search result
+    resultContainer.classList.add("fade-in");
   };
 
   img.onerror = function () {
