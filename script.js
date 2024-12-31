@@ -21,7 +21,7 @@ function searchMovie() {
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
         <br>
-        <button id="download-btn" onclick="fetchAndDownload('${txtPath}', '${query}')">Download</button>
+        <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
         <br>
         <button id="mx-player-btn" onclick="playWithMXPlayer('${txtPath}')">Play with MX Player</button>
       `;
@@ -49,29 +49,10 @@ function searchMovie() {
   searchInput.value = ''; // Clear the search bar
 }
 
-// Fetch the URL from the TXT file and download the linked content
-function fetchAndDownload(txtPath, movieName) {
-  fetch(txtPath)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Could not fetch the download link.");
-      }
-      return response.text();
-    })
-    .then((downloadUrl) => {
-      // Trim the URL and initiate a download
-      const trimmedUrl = downloadUrl.trim();
-
-      const a = document.createElement("a");
-      a.href = trimmedUrl;
-      a.download = movieName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    })
-    .catch((error) => {
-      alert("Error: " + error.message);
-    });
+// Redirect to download.html with the folder name stored in local storage
+function redirectToDownload(folderName) {
+  localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
+  window.location.href = "download.html"; // Redirect to download.html
 }
 
 // Play the video with MX Player using the link from the TXT file
@@ -91,26 +72,3 @@ function playWithMXPlayer(txtPath) {
       alert("Error: " + error.message);
     });
 }
-
-// Event listener for gallery image clicks
-function searchMovieByImage(movieName) {
-  const searchInput = document.getElementById("search");
-  searchInput.value = movieName; // Fill the search bar with the movie name
-  searchMovie(); // Trigger the search functionality
-}
-
-// Detect back button press and refresh the page
-window.addEventListener('popstate', function () {
-  location.reload(); // Refresh the page
-});
-
-// Optional: Push a state to history when the page loads, to detect back action
-window.history.pushState({}, document.title, window.location.href);
-
-// Search on pressing Enter key
-document.getElementById("search").addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    searchMovie(); // Call the search function
-    this.blur(); // Close the keyboard
-  }
-});
