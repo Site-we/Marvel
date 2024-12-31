@@ -24,7 +24,7 @@ function searchMovie() {
         <br>
         <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
         <br>
-        <button id="mx-player-btn" onclick="playWithMXPlayer('${txtPath}')">Play with MX Player</button>
+        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
       `;
       gallery.style.display = "none"; // Hide the gallery
     };
@@ -54,6 +54,12 @@ function searchMovie() {
 function redirectToDownload(folderName) {
   localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
   window.location.href = "download.html"; // Redirect to download.html
+}
+
+// Redirect to mxplayer.html with the folder name stored in local storage
+function redirectToMXPlayer(folderName) {
+  localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
+  window.location.href = "mxplayer.html"; // Redirect to mxplayer.html
 }
 
 // Fetch the URL from the TXT file and download the linked content
