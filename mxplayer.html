@@ -3,67 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MX Player</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Play Movie with MX Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1c1c1e;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      color: #e62429;
+      text-transform: uppercase;
+    }
+
+    .movie-poster {
+      margin: 20px auto;
+      width: 50%;
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .button-container {
+      margin-top: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .button-container button {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ffffff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      width: 80%;
+      max-width: 400px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .button-container button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    .placeholder {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Play Movie with MX Player</h1>
-  </header>
-
-  <div id="movie-info">
-    <h2>Choose Movie Quality</h2>
-    <button id="download-480p" onclick="fetchAndPlay('480')">Play 480p</button>
-    <button id="download-720p" onclick="fetchAndPlay('720')">Play 720p</button>
-    <button id="download-1080p" onclick="fetchAndPlay('1080')">Play 1080p</button>
+  <h1 id="movie-title">Play Movie with MX Player</h1>
+  <img id="movie-poster" class="movie-poster" src="" alt="Movie Poster" style="display: none;">
+  <div class="button-container">
+    <button id="play-480p" onclick="playMovie('480p')" style="display: none;">Play 480p</button>
+    <button id="play-720p" onclick="playMovie('720p')" style="display: none;">Play 720p</button>
+    <button id="play-1080p" onclick="playMovie('1080p')" style="display: none;">Play 1080p</button>
   </div>
+  <p class="placeholder" id="placeholder">No movie selected. Please go back and select a movie.</p>
 
   <script>
-    window.onload = function() {
-      const folderName = localStorage.getItem("movieFolderName"); // Get folder name from localStorage
+    // Get the movie folder name from local storage
+    const movieFolderName = localStorage.getItem("movieFolderName");
 
-      if (folderName) {
-        document.getElementById('movie-info').style.display = 'block'; // Show the quality buttons
-      } else {
-        alert("No movie folder found in local storage.");
+    if (movieFolderName) {
+      // Update the movie title
+      document.getElementById("movie-title").textContent = `Play ${movieFolderName} with MX Player`;
+
+      // Show the movie poster
+      const posterPath = `Movies/${movieFolderName}/${movieFolderName}.jpg`;
+      const moviePoster = document.getElementById("movie-poster");
+      moviePoster.src = posterPath;
+      moviePoster.alt = `${movieFolderName} Poster`;
+      moviePoster.style.display = "block";
+
+      // Show play buttons
+      document.getElementById("play-480p").style.display = "block";
+      document.getElementById("play-720p").style.display = "block";
+      document.getElementById("play-1080p").style.display = "block";
+
+      // Hide placeholder
+      document.getElementById("placeholder").style.display = "none";
+    }
+
+    // Function to fetch the streaming link and open in MX Player
+    function playMovie(quality) {
+      if (!movieFolderName) {
+        alert("No movie selected.");
+        return;
       }
-    };
 
-    // Fetch the download link from the .txt file and open the streaming URL in MX Player
-    function fetchAndPlay(quality) {
-      const folderName = localStorage.getItem("movieFolderName");
-      const txtPath = `Movies/${folderName}/${folderName}-${quality}.txt`;
+      // Construct the path to the .txt file
+      const txtPath = `Movies/${movieFolderName}/${movieFolderName}-${quality}.txt`;
 
+      // Fetch the streaming link from the .txt file
       fetch(txtPath)
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
             throw new Error("Could not fetch the streaming link.");
           }
           return response.text();
         })
-        .then(streamingUrl => {
+        .then((streamingUrl) => {
+          // Trim the URL and play it with MX Player
           const trimmedUrl = streamingUrl.trim();
-
-          // Copy the URL to clipboard (if required)
-          copyToClipboard(trimmedUrl);
-
-          // Open the URL in MX Player app (via Intent on mobile platforms)
           openInMXPlayer(trimmedUrl);
         })
-        .catch(error => {
+        .catch((error) => {
           alert("Error: " + error.message);
         });
-    }
-
-    // Function to copy the URL to clipboard
-    function copyToClipboard(url) {
-      const textArea = document.createElement("textarea");
-      textArea.value = url;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
-      alert("Download link copied to clipboard.");
     }
 
     // Function to open the URL in MX Player (assuming MX Player is available)
