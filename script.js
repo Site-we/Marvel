@@ -101,6 +101,35 @@ function fuzzyMatch(input, keyword) {
   return normalizeString(input).includes(normalizeString(keyword));
 }
 
+// Levenshtein Distance function for more flexible matching
+function getLevenshteinDistance(a, b) {
+  const tmp = [];
+  for (let i = 0; i <= a.length; i++) {
+    tmp[i] = [i];
+  }
+  for (let j = 0; j <= b.length; j++) {
+    tmp[0][j] = j;
+  }
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      tmp[i][j] = Math.min(
+        tmp[i - 1][j] + 1, // Deletion
+        tmp[i][j - 1] + 1, // Insertion
+        tmp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1) // Substitution
+      );
+    }
+  }
+  return tmp[a.length][b.length];
+}
+
+// Function to check if two strings are similar using Levenshtein distance
+function fuzzyMatchLevenshtein(input, keyword) {
+  const distance = getLevenshteinDistance(input, keyword);
+  const maxLength = Math.max(input.length, keyword.length);
+  const similarity = 1 - distance / maxLength; // Similarity score between 0 and 1
+  return similarity > 0.7; // Consider a match if similarity is above 70%
+}
+
 // Search by image or programmatically fill input and search
 function searchMovieByImage(movieName) {
   const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
