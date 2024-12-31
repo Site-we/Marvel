@@ -60,6 +60,10 @@ function searchMovie() {
         <br>
         <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
       `;
+
+      // Animate the search results
+      resultContainer.style.display = "block";  // Show the result container
+      resultContainer.classList.add("fade-in"); // Add animation class
       gallery.style.display = "none"; // Hide the gallery
     };
 
@@ -73,6 +77,8 @@ function searchMovie() {
       <h2>No input provided</h2>
       <p>Please enter a movie name to search.</p>
     `;
+    resultContainer.style.display = "block";  // Show the result container
+    resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "grid"; // Show the gallery
   }
 
@@ -102,6 +108,8 @@ function fallbackSearch(query, resultContainer, gallery) {
       <h2>No results found for "${query}"</h2>
       <p>Make sure the movie name matches the folder and file structure.</p>
     `;
+    resultContainer.style.display = "block";  // Show the result container
+    resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "grid"; // Show the gallery
   }
 }
@@ -138,6 +146,10 @@ function searchMovieByImage(movieName) {
       <br>
       <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
     `;
+
+    // Animate the search results
+    resultContainer.style.display = "block";  // Show the result container
+    resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "none"; // Hide the gallery
   };
 
@@ -146,6 +158,8 @@ function searchMovieByImage(movieName) {
       <h2>No results found for "${movieName}"</h2>
       <p>Make sure the movie name matches the folder and file structure.</p>
     `;
+    resultContainer.style.display = "block";  // Show the result container
+    resultContainer.classList.add("fade-in"); // Add animation class
     gallery.style.display = "grid"; // Show the gallery
   };
 }
