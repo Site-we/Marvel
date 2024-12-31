@@ -1,6 +1,6 @@
+// Load movies from JSON file
 let movies = [];
 
-// Load movies from JSON file
 fetch('movies.json')
   .then(response => {
     if (!response.ok) {
@@ -10,26 +10,24 @@ fetch('movies.json')
   })
   .then(data => {
     movies = data; // Save loaded movies
-    displayMovies(movies); // Display the movies on the main page
+    loadGallery();  // Load the gallery images after data is loaded
   })
   .catch(error => {
     console.error("Error loading movies.json:", error);
   });
 
-// Display movies in gallery format on the main page
-function displayMovies(movies) {
+// Load all movie images dynamically
+function loadGallery() {
   const gallery = document.getElementById("gallery");
-  gallery.innerHTML = ''; // Clear the gallery first
-
-  movies.forEach((movie) => {
+  gallery.innerHTML = ''; // Clear previous gallery content
+  
+  movies.forEach(movie => {
     const movieImage = document.createElement("img");
-    movieImage.src = `Movies/${normalizeString(movie.name)}/${normalizeString(movie.name)}.jpg`;
+    movieImage.src = `Movies/${movie.name.toLowerCase()}/${movie.name.toLowerCase()}.jpg`;
     movieImage.alt = movie.name;
-    movieImage.onclick = function() {
-      searchMovieByImage(movie.name); // Trigger search on click
+    movieImage.onclick = function () {
+      searchMovieByImage(movie.name);
     };
-
-    // Add image to gallery
     gallery.appendChild(movieImage);
   });
 }
@@ -53,7 +51,7 @@ function searchMovie() {
     img.src = imagePath;
 
     img.onload = function () {
-      // Add search result with buttons and apply animation class
+      // Add search result with buttons
       resultContainer.innerHTML = `
         <h2>Result for "${query}"</h2>
         <img src="${imagePath}" alt="${query}">
@@ -62,7 +60,6 @@ function searchMovie() {
         <br>
         <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
       `;
-      resultContainer.classList.add("fade-in");  // Apply fade-in animation class
       gallery.style.display = "none"; // Hide the gallery
     };
 
@@ -132,7 +129,7 @@ function searchMovieByImage(movieName) {
   img.src = imagePath;
 
   img.onload = function () {
-    // Add search result with buttons and apply animation class
+    // Add search result with buttons
     resultContainer.innerHTML = `
       <h2>Result for "${movieName}"</h2>
       <img src="${imagePath}" alt="${movieName}">
@@ -141,7 +138,6 @@ function searchMovieByImage(movieName) {
       <br>
       <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
     `;
-    resultContainer.classList.add("fade-in");  // Apply fade-in animation class
     gallery.style.display = "none"; // Hide the gallery
   };
 
@@ -173,3 +169,11 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     this.blur(); // Close the keyboard
   }
 });
+
+// Refresh page when back button is pressed
+window.addEventListener('popstate', function() {
+  window.location.reload();  // Reload the page when user navigates back
+});
+
+// This ensures that the page refreshes when the back button is pressed
+history.pushState({}, null, window.location.href); // Push initial state to history so that popstate can be triggered
