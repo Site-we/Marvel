@@ -89,45 +89,23 @@ header h1 {
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease;
-  cursor: pointer;
 }
 
 .gallery img:hover {
   transform: scale(1.05);
 }
 
-/* Animation for Click Zoom */
-@keyframes zoomIn {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(0);
-    opacity: 0;
-  }
-}
-
-#search-result {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-
-#search-result.visible {
-  opacity: 1;
-}
-
-img.click-zoom {
-  animation: zoomIn 0.5s forwards;
-}
-
 /* Search Result Styles */
 .search-result {
   margin-top: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.search-result.fade-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .search-result img {
