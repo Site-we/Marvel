@@ -1,3 +1,20 @@
+let movies = [];
+
+// Load movies from JSON file
+fetch('movies.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to load movies dataset.');
+    }
+    return response.json();
+  })
+  .then(data => {
+    movies = data; // Save loaded movies
+  })
+  .catch(error => {
+    console.error("Error loading movies.json:", error);
+  });
+
 // Search for the movie
 function searchMovie() {
   const searchInput = document.getElementById("search");
@@ -30,12 +47,8 @@ function searchMovie() {
     };
 
     img.onerror = function () {
-      // Display "no result found" message
-      resultContainer.innerHTML = `
-        <h2>No results found for "${query}"</h2>
-        <p>Make sure the movie name matches the folder and file structure.</p>
-      `;
-      gallery.style.display = "grid"; // Show the gallery
+      // Fallback to alternative search
+      fallbackSearch(query, resultContainer, gallery);
     };
   } else {
     // Display message for empty input
@@ -50,6 +63,48 @@ function searchMovie() {
   searchInput.value = ''; // Clear the search bar
 }
 
+// Fallback logic for alternative search
+function fallbackSearch(query, resultContainer, gallery) {
+  const normalizedQuery = normalizeString(query);
+  let matchedMovie = null;
+
+  // Search through the loaded movies dataset
+  movies.forEach((movie) => {
+    if (
+      movie.keywords.some((keyword) =>
+        fuzzyMatch(normalizedQuery, normalizeString(keyword))
+      )
+    ) {
+      matchedMovie = movie;
+    }
+  });
+
+  if (matchedMovie) {
+    resultContainer.innerHTML = `
+      <h2>Did you mean "${matchedMovie.name}"?</h2>
+      <p>Showing closest match for your search.</p>
+      <button onclick="searchMovieByImage('${matchedMovie.name}')">Search Again</button>
+    `;
+    gallery.style.display = "none"; // Hide the gallery
+  } else {
+    resultContainer.innerHTML = `
+      <h2>No results found for "${query}"</h2>
+      <p>Make sure the movie name matches the folder and file structure.</p>
+    `;
+    gallery.style.display = "grid"; // Show the gallery
+  }
+}
+
+// Normalize strings for consistency (e.g., remove extra spaces, lowercase)
+function normalizeString(str) {
+  return str.toLowerCase().replace(/[\s]+/g, " ").trim();
+}
+
+// Fuzzy match function to check if a keyword is part of the search input
+function fuzzyMatch(input, keyword) {
+  return normalizeString(input).includes(normalizeString(keyword));
+}
+
 // Redirect to download.html with the folder name stored in local storage
 function redirectToDownload(folderName) {
   localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
@@ -60,31 +115,6 @@ function redirectToDownload(folderName) {
 function redirectToMXPlayer(folderName) {
   localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
   window.location.href = "mxplayer.html"; // Redirect to mxplayer.html
-}
-
-// Fetch the URL from the TXT file and download the linked content
-function fetchAndDownload(txtPath, movieName) {
-  fetch(txtPath)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Could not fetch the download link.");
-      }
-      return response.text();
-    })
-    .then((downloadUrl) => {
-      // Trim the URL and initiate a download
-      const trimmedUrl = downloadUrl.trim();
-
-      const a = document.createElement("a");
-      a.href = trimmedUrl;
-      a.download = movieName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    })
-    .catch((error) => {
-      alert("Error: " + error.message);
-    });
 }
 
 // Play the video with MX Player using the link from the TXT file
@@ -104,21 +134,6 @@ function playWithMXPlayer(txtPath) {
       alert("Error: " + error.message);
     });
 }
-
-// Event listener for gallery image clicks
-function searchMovieByImage(movieName) {
-  const searchInput = document.getElementById("search");
-  searchInput.value = movieName; // Fill the search bar with the movie name
-  searchMovie(); // Trigger the search functionality
-}
-
-// Detect back button press and refresh the page
-window.addEventListener('popstate', function () {
-  location.reload(); // Refresh the page
-});
-
-// Optional: Push a state to history when the page loads, to detect back action
-window.history.pushState({}, document.title, window.location.href);
 
 // Search on pressing Enter key
 document.getElementById("search").addEventListener("keydown", function (event) {
