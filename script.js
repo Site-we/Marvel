@@ -171,8 +171,7 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     this.blur(); // Close the keyboard
   }
 });
-
 // Back button logic to refresh the page
 window.addEventListener('popstate', function () {
-  location.reload(); // Reload the page when the back button is pressed
+  window.location.href = window.location.href;  // Redirect to the same page
 });
