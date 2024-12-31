@@ -99,6 +99,7 @@ function fallbackSearch(query, resultContainer, gallery) {
   // Search through the loaded movies dataset
   movies.forEach((movie) => {
     movie.keywords.forEach((keyword) => {
+      // Check if the normalized keyword matches the normalized query
       if (fuzzyMatch(normalizedQuery, normalizeString(keyword))) {
         matchedMovie = movie;
       }
