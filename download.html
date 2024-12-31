@@ -105,23 +105,37 @@
       document.getElementById("placeholder").style.display = "none";
     }
 
-    // Function to handle downloads based on quality
+    // Function to fetch and download from the .txt file
     function downloadMovie(quality) {
       if (!movieFolderName) {
         alert("No movie selected.");
         return;
       }
 
-      // Construct the download URL based on the movie folder name and quality
-      const downloadUrl = `Movies/${movieFolderName}/${movieFolderName}-${quality}.mp4`;
+      // Construct the path to the .txt file
+      const txtPath = `Movies/${movieFolderName}/${movieFolderName}-${quality}.txt`;
 
-      // Create a download link and trigger the download
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = `${movieFolderName}-${quality}`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      // Fetch the download link from the .txt file
+      fetch(txtPath)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Could not fetch the download link.");
+          }
+          return response.text();
+        })
+        .then((downloadUrl) => {
+          // Trim the URL and initiate a download
+          const trimmedUrl = downloadUrl.trim();
+          const a = document.createElement("a");
+          a.href = trimmedUrl;
+          a.download = `${movieFolderName}-${quality}`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
     }
   </script>
 </body>
