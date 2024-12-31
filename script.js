@@ -10,10 +10,29 @@ fetch('movies.json')
   })
   .then(data => {
     movies = data; // Save loaded movies
+    displayMovies(movies); // Display the movies on the main page
   })
   .catch(error => {
     console.error("Error loading movies.json:", error);
   });
+
+// Display movies in gallery format on the main page
+function displayMovies(movies) {
+  const gallery = document.getElementById("gallery");
+  gallery.innerHTML = ''; // Clear the gallery first
+
+  movies.forEach((movie) => {
+    const movieImage = document.createElement("img");
+    movieImage.src = `Movies/${normalizeString(movie.name)}/${normalizeString(movie.name)}.jpg`;
+    movieImage.alt = movie.name;
+    movieImage.onclick = function() {
+      searchMovieByImage(movie.name); // Trigger search on click
+    };
+
+    // Add image to gallery
+    gallery.appendChild(movieImage);
+  });
+}
 
 // Search for the movie
 function searchMovie() {
