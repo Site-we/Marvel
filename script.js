@@ -171,7 +171,10 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     this.blur(); // Close the keyboard
   }
 });
-// Back button logic to refresh the page
+// Detect back button press and refresh the page
 window.addEventListener('popstate', function () {
-  window.location.href = window.location.href;  // Redirect to the same page
+  location.reload(); // Refresh the page
 });
+
+// Optional: Push a state to history when the page loads, to detect back action
+window.history.pushState({}, document.title, window.location.href);
