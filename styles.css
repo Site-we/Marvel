@@ -291,11 +291,11 @@ button:hover {
   }
 
   #download-btn {
-    background-color: #444444;
+    background-color: #007bff;
   }
 
   #download-btn:hover {
-    background-color: #222222;
+    background-color: #0056b3;
   }
 
   #mx-player-btn {
