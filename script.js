@@ -18,15 +18,44 @@ fetch('movies.json')
 // Display all movie images on the main page
 function displayMovies() {
   const gallery = document.getElementById("gallery");
+  if (!gallery) {
+    console.error("Gallery element not found.");
+    return;
+  }
+  
   gallery.innerHTML = ''; // Clear any existing gallery content
+
+  if (movies.length === 0) {
+    gallery.innerHTML = `<p>No movies found in the dataset.</p>`;
+    return;
+  }
 
   movies.forEach((movie) => {
     const imgElement = document.createElement("img");
-    imgElement.src = `Movies/${movie.name.replace(/\s+/g, "").toLowerCase()}/${movie.name.replace(/\s+/g, "").toLowerCase()}.jpg`;
+
+    // Ensure the movie object has a name
+    if (!movie.name) {
+      console.warn("Movie object missing 'name' property:", movie);
+      return;
+    }
+
+    // Construct the image path
+    const formattedName = movie.name.replace(/\s+/g, "").toLowerCase();
+    imgElement.src = `Movies/${formattedName}/${formattedName}.jpg`;
     imgElement.alt = movie.name;
+    imgElement.title = movie.name;
+
+    // Handle click event
     imgElement.onclick = () => searchMovieByImage(movie.name);
+
+    imgElement.onerror = () => {
+      console.error(`Image not found for movie: ${movie.name}`);
+      imgElement.src = 'fallback.jpg'; // Optional fallback image
+    };
+
     gallery.appendChild(imgElement);
   });
+}
 
 // Search for the movie
 function searchMovie() {
