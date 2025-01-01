@@ -277,7 +277,7 @@ button:hover {
   }
 
   .search-container input {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba( 0, 0, 0, 1);
     color: #ffffff;
   }
 
