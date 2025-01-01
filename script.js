@@ -204,3 +204,56 @@ window.addEventListener('popstate', function () {
 
 // Optional: Push a state to history when the page loads, to detect back action
 window.history.pushState({}, document.title, window.location.href);
+
+// Check if the system is in dark mode
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  createBinaryRain();
+}
+
+function createBinaryRain() {
+  const binaryCanvas = document.createElement("canvas");
+  binaryCanvas.id = "binary-rain";
+  document.body.appendChild(binaryCanvas);
+
+  const ctx = binaryCanvas.getContext("2d");
+  binaryCanvas.width = window.innerWidth;
+  binaryCanvas.height = window.innerHeight;
+
+  const fontSize = 16;
+  const columns = Math.floor(binaryCanvas.width / fontSize);
+  const drops = Array(columns).fill(1); // Initialize drop positions
+
+  function drawBinaryRain() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; // Slightly fade the canvas
+    ctx.fillRect(0, 0, binaryCanvas.width, binaryCanvas.height);
+
+    ctx.fillStyle = "#00FF00"; // Light green binary numbers
+    ctx.font = `${fontSize}px monospace`;
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = Math.random() > 0.5 ? "1" : "0"; // Random binary number
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      ctx.fillText(text, x, y);
+
+      // Reset drop position if it goes off-screen or randomly
+      if (y > binaryCanvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+
+      drops[i]++;
+    }
+  }
+
+  setInterval(drawBinaryRain, 50); // Refresh rate for the animation
+}
+
+// Adjust canvas size on window resize
+window.addEventListener("resize", () => {
+  const binaryCanvas = document.getElementById("binary-rain");
+  if (binaryCanvas) {
+    binaryCanvas.width = window.innerWidth;
+    binaryCanvas.height = window.innerHeight;
+  }
+});
