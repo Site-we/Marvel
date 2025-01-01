@@ -178,3 +178,72 @@ window.addEventListener('popstate', function () {
 
 // Optional: Push a state to history when the page loads, to detect back action
 window.history.pushState({}, document.title, window.location.href);
+
+const canvas = document.getElementById("binary-background");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const binarySymbols = "01"; // Binary numbers
+const fontSize = 16; // Font size for the binary characters
+const columns = canvas.width / fontSize; // Number of columns based on font size
+
+// Create an array of drops, one for each column
+const drops = Array(Math.floor(columns)).fill(1);
+
+let animationInterval = null;
+
+function drawBinaryAnimation() {
+  // Set a semi-transparent black background for fade effect
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Set the font color and style
+  ctx.fillStyle = "#0f0"; // Light green color
+  ctx.font = `${fontSize}px monospace`;
+
+  // Loop through each drop
+  drops.forEach((y, x) => {
+    const text = binarySymbols[Math.floor(Math.random() * binarySymbols.length)];
+    ctx.fillText(text, x * fontSize, y * fontSize);
+
+    // Reset the drop to the top or move it down
+    if (y * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[x] = 0; // Reset to the top
+    }
+
+    drops[x]++;
+  });
+}
+
+// Adjust canvas size on window resize
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+function toggleTheme(isDark) {
+  const body = document.body;
+  if (isDark) {
+    body.classList.add("dark-theme");
+    canvas.style.display = "block"; // Show canvas for dark theme
+    if (!animationInterval) {
+      animationInterval = setInterval(drawBinaryAnimation, 50);
+    }
+  } else {
+    body.classList.remove("dark-theme");
+    canvas.style.display = "none"; // Hide canvas for light theme
+    if (animationInterval) {
+      clearInterval(animationInterval);
+      animationInterval = null;
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+    }
+  }
+}
+
+// Example toggle logic (replace with your actual theme toggle button)
+document.getElementById("theme-toggle").addEventListener("click", function () {
+  const isDark = document.body.classList.contains("dark-theme");
+  toggleTheme(!isDark); // Toggle theme
+});
