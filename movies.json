@@ -61,7 +61,7 @@
     },
     {
       "name": "Spider Man Homecoming",
-      "keywords": ["spider man 1", "spiderman homecoming"]
+      "keywords": ["homecoming"]
     },
     {
       "name": "Thor Ragnarok",
@@ -89,7 +89,7 @@
     },
     {
       "name": "Spider Man Far From Home",
-      "keywords": ["spider man far from home", "spiderman 2"]
+      "keywords": ["far from home"]
     },
     {
       "name": "Black Widow",
@@ -105,7 +105,7 @@
     },
     {
       "name": "Spider Man No Way Home",
-      "keywords": ["spider man no way home", "spiderman 3", "multiverse"]
+      "keywords": ["no way home"]
     },
     {
       "name": "Doctor Strange in the Multiverse of Madness",
@@ -134,5 +134,21 @@
     {
       "name":"Deadpool and Wolverine",
       "keywords": ["Deadpool 3"]
+    },
+    {
+      "name":"Spiderman",
+      "keywords": ["Spiderman1"]
+    },
+    {
+      "name":"Spiderman 2",
+      "keywords": ["Spiderman2"]
+    },
+    {
+      "name":"Spiderman 3",
+      "keywords": ["Spiderman3"]
+    },
+    {
+      "name":"The Amazing Spiderman",
+      "keywords": ["Amazing Spiderman"]
     }
 ]
