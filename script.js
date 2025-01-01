@@ -34,26 +34,6 @@ function displayMovies() {
   }
 }
 
-// Apply random binary layout when the system is in dark mode
-function applyRandomBinaryLayout() {
-  const gallery = document.getElementById("gallery");
-  const images = gallery.getElementsByTagName("img");
-
-  Array.from(images).forEach(img => {
-    // Generate random position for binary layout
-    const randomX = Math.random() * 100;
-    const randomY = Math.random() * 100;
-    img.style.position = "absolute";
-    img.style.left = `${randomX}%`;
-    img.style.top = `${randomY}%`;
-
-    // Apply a binary-like layout using random positions
-    img.style.transition = "all 0.5s ease-in-out";
-  });
-
-  gallery.style.position = "relative"; // Ensure the gallery container has a reference point for positioning
-}
-
 // Search for the movie
 function searchMovie() {
   const searchInput = document.getElementById("search");
