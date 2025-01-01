@@ -83,20 +83,18 @@ header h1 {
   background-color: #ff8080;
   transform: scale(1.05);
 }
-
-/* General Styles for the Gallery */
+/* Gallery Styles */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller image size */
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   padding: 20px;
   justify-items: center;
 }
 
-/* Movie image styling */
 .gallery img {
-  width: 100%; /* Make images fill their grid cells */
-  max-width: 180px; /* Limit the maximum size of the images */
+  width: 90%;
+  max-width: 300px;
   height: auto;
   object-fit: cover;
   border-radius: 10px;
@@ -105,30 +103,8 @@ header h1 {
 }
 
 .gallery img:hover {
-  transform: scale(1.05); /* Zoom effect on hover */
+  transform: scale(1.05);
 }
-
-/* Media queries for responsive adjustments */
-@media (max-width: 768px) {
-  .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust layout for medium screens */
-  }
-
-  .gallery img {
-    max-width: 150px; /* Reduce image size further on smaller screens */
-  }
-}
-
-@media (max-width: 480px) {
-  .gallery {
-    grid-template-columns: 1fr; /* Single column layout for very small screens */
-  }
-
-  .gallery img {
-    max-width: 100%; /* Ensure images take up full width in single column layout */
-  }
-}
-
 /* Movie Card Styles */
 .movie-card {
   border: 2px solid #e62429;
