@@ -3,19 +3,26 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #ffffff; /* White background for the body */
-  color: #000000; /* Black text color for better contrast */
+  background-color: #ffffff; /* Default white background */
+  color: #000000; /* Black text for better contrast */
   text-align: center;
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions for themes */
+}
+
+/* Dark Theme */
+body.dark-theme {
+  background-color: #000000; /* Black background for dark theme */
+  color: #ffffff; /* White text for dark theme */
 }
 
 /* Header Styles */
 header {
-  background-image: url('Images/Header.jpg'); /* Set your own background image for header */
+  background-image: url('Images/Header.jpg'); /* Set your own header background image */
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
   padding: 10px;
-  background-color: #F0131E;
+  background-color: #F0131E; /* Fallback background color */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -24,12 +31,12 @@ header h1 {
   font-size: 2.5rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #ffffff; /* White color for text in header */
+  color: #ffffff;
 }
 
 /* Search Bar Styles */
 .search-container {
-  margin: 10px 0;
+  margin: 20px 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -45,25 +52,27 @@ header h1 {
   font-size: 1.2rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   outline: none;
-  background-color: rgba(0, 0, 0, 0.7); /* Dark background with some transparency */
-  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark input background */
+  color: #ffffff;
+  transition: box-shadow 0.3s, transform 0.2s;
 }
 
 .search-container input:focus {
   box-shadow: 0px 0px 8px rgba(230, 36, 41, 0.8);
+  transform: scale(1.02);
 }
 
 .search-container button {
   padding: 10px 25px;
   border: none;
-  background-color: #fff;
+  background-color: #ffffff;
   color: #e62429;
   font-size: 1.1rem;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
   text-transform: uppercase;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -75,24 +84,25 @@ header h1 {
 /* Gallery Styles */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
   justify-items: center;
 }
 
 .gallery img {
-  width: 90%;
+  width: 100%;
   max-width: 300px;
   height: auto;
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gallery img:hover {
   transform: scale(1.05);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Search Result Styles */
@@ -117,21 +127,23 @@ header h1 {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Download Button Styles */
-#download-btn {
+/* Button Styles */
+button {
   display: inline-block;
   padding: 15px 30px;
-  margin: 20px auto 15px;
   font-size: 1.2rem;
   font-weight: bold;
   color: #ffffff;
-  background-color: #007bff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   text-transform: uppercase;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+#download-btn {
+  background-color: #007bff;
 }
 
 #download-btn:hover {
@@ -139,20 +151,7 @@ header h1 {
   transform: scale(1.1);
 }
 
-/* Specific Styles for Play with MX Player Button */
 #mx-player-btn {
-  display: inline-block;
-  padding: 15px 30px;
-  margin: 20px auto 15px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-transform: uppercase;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-  transition: background-color 0.3s ease, transform 0.2s ease;
   background-color: #28a745; /* Green color */
   margin-bottom: 50px;
 }
@@ -206,4 +205,19 @@ header h1 {
 
 .movie-card button:hover {
   background-color: #ff8080;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .search-container input {
+    width: 90%;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
 }
