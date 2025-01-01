@@ -80,8 +80,8 @@ header h1 {
 }
 
 .search-container button:hover {
-  background-color: #ff8080;
-  transform: scale(1.05);
+  background-color: #ffffff;
+  transform: scale(1.0);
 }
 
 /* Gallery Container Styling */
