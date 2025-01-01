@@ -87,7 +87,7 @@ header h1 {
 /* Gallery Container Styling */
 #gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); /* Adjust for responsive layout */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for responsive layout */
   gap: 20px; /* Spacing between images */
   padding: 20px;
   justify-items: center;
@@ -95,7 +95,7 @@ header h1 {
 
 #gallery img {
   width: 90%;
-  max-width: 300px;
+  max-width: 200px;
   height: auto;
   object-fit: cover;
   border-radius: 10px;
