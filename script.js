@@ -28,12 +28,6 @@ function displayMovies() {
     gallery.appendChild(imgElement);
   });
 
-  // Check if the system is using dark theme
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    applyRandomBinaryLayout();
-  }
-}
-
 // Search for the movie
 function searchMovie() {
   const searchInput = document.getElementById("search");
