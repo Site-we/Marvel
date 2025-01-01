@@ -208,42 +208,41 @@ function drawBinaryAnimation() {
     const text = binarySymbols[Math.floor(Math.random() * binarySymbols.length)];
     ctx.fillText(text, x * fontSize, y * fontSize);
 
-    // Reset the drop to the top or move it down
-    if (y * fontSize > canvas.height && Math.random() > 0.975) {
-      drops[x] = 0; // Reset to the top
-    }
+// Create binary animation in dark mode
+function createBinaryAnimation() {
+  const binaryContainer = document.createElement('div');
+  binaryContainer.className = 'binary-container';
+  document.body.appendChild(binaryContainer);
 
-    drops[x]++;
-  });
-}
+  const numberOfColumns = Math.floor(window.innerWidth / 20); // Adjust column count based on screen width
+  for (let i = 0; i < numberOfColumns; i++) {
+    const column = document.createElement('div');
+    column.className = 'binary-column';
+    column.style.left = `${i * 20}px`; // Space columns evenly
+    column.style.animationDuration = `${Math.random() * 5 + 3}s`; // Random fall speed
+    column.style.animationDelay = `${Math.random() * 5}s`; // Random start delay
 
-// Adjust canvas size on window resize
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
+    // Generate random binary numbers
+    const binaryNumbers = Array.from({ length: 20 }, () =>
+      Math.random() > 0.5 ? '1' : '0'
+    ).join('<br>');
+    column.innerHTML = binaryNumbers;
 
-function toggleTheme(isDark) {
-  const body = document.body;
-  if (isDark) {
-    body.classList.add("dark-theme");
-    canvas.style.display = "block"; // Show canvas for dark theme
-    if (!animationInterval) {
-      animationInterval = setInterval(drawBinaryAnimation, 50);
-    }
-  } else {
-    body.classList.remove("dark-theme");
-    canvas.style.display = "none"; // Hide canvas for light theme
-    if (animationInterval) {
-      clearInterval(animationInterval);
-      animationInterval = null;
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-    }
+    binaryContainer.appendChild(column);
   }
 }
 
-// Example toggle logic (replace with your actual theme toggle button)
-document.getElementById("theme-toggle").addEventListener("click", function () {
-  const isDark = document.body.classList.contains("dark-theme");
-  toggleTheme(!isDark); // Toggle theme
+// Detect dark mode and add binary animation
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  createBinaryAnimation();
+}
+
+// Reapply the animation if the theme changes dynamically
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (e.matches) {
+    createBinaryAnimation();
+  } else {
+    const binaryContainer = document.querySelector('.binary-container');
+    if (binaryContainer) binaryContainer.remove();
+  }
 });
