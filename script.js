@@ -27,6 +27,31 @@ function displayMovies() {
     imgElement.onclick = () => searchMovieByImage(movie.name);
     gallery.appendChild(imgElement);
   });
+
+  // Check if the system is using dark theme
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    applyRandomBinaryLayout();
+  }
+}
+
+// Apply random binary layout when the system is in dark mode
+function applyRandomBinaryLayout() {
+  const gallery = document.getElementById("gallery");
+  const images = gallery.getElementsByTagName("img");
+
+  Array.from(images).forEach(img => {
+    // Generate random position for binary layout
+    const randomX = Math.random() * 100;
+    const randomY = Math.random() * 100;
+    img.style.position = "absolute";
+    img.style.left = `${randomX}%`;
+    img.style.top = `${randomY}%`;
+
+    // Apply a binary-like layout using random positions
+    img.style.transition = "all 0.5s ease-in-out";
+  });
+
+  gallery.style.position = "relative"; // Ensure the gallery container has a reference point for positioning
 }
 
 // Search for the movie
@@ -171,6 +196,7 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     this.blur(); // Close the keyboard
   }
 });
+
 // Detect back button press and refresh the page
 window.addEventListener('popstate', function () {
   location.reload(); // Refresh the page
