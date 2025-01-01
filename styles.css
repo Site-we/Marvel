@@ -3,11 +3,9 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #ffffff; /* Default white background */
+  background-color: #ffffff; /* White background for the body */
   color: #000000; /* Black text color for better contrast */
   text-align: center;
-  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
-  overflow: hidden; /* Prevent scroll due to animation */
 }
 
 /* Header Styles */
@@ -17,7 +15,7 @@ header {
   background-position: center center;
   background-attachment: fixed;
   padding: 10px;
-  background-color: #f0131e;
+  background-color: #F0131E;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -26,7 +24,7 @@ header h1 {
   font-size: 2.5rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #ffffff; /* White text in header */
+  color: #ffffff; /* White color for text in header */
 }
 
 /* Search Bar Styles */
@@ -47,7 +45,7 @@ header h1 {
   font-size: 1.2rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   outline: none;
-  background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
+  background-color: rgba(0, 0, 0, 0.7); /* Dark background with some transparency */
   color: #fff;
 }
 
@@ -141,7 +139,7 @@ header h1 {
   transform: scale(1.1);
 }
 
-/* Play with MX Player Button Styles */
+/* Specific Styles for Play with MX Player Button */
 #mx-player-btn {
   display: inline-block;
   padding: 15px 30px;
@@ -208,42 +206,4 @@ header h1 {
 
 .movie-card button:hover {
   background-color: #ff8080;
-}
-
-/* Binary Animation for Dark Theme */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000000; /* Black background for dark theme */
-    color: #ffffff; /* White text */
-  }
-
-  .binary-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-    pointer-events: none; /* Ensure it doesn't block interactions */
-  }
-
-  .binary-column {
-    position: absolute;
-    top: -100%; /* Start from offscreen */
-    width: 1em;
-    color: #00ff00; /* Light green */
-    font-size: 1.5em;
-    font-family: 'Courier New', Courier, monospace;
-    animation: fall linear infinite;
-  }
-
-  @keyframes fall {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(100vh); /* Move to the bottom of the screen */
-    }
-  }
 }
