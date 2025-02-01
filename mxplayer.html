@@ -75,9 +75,9 @@
   <h1 id="movie-title">Play Movie with MX Player</h1>
   <img id="movie-poster" class="movie-poster" src="" alt="Movie Poster" style="display: none;">
   <div class="button-container">
-    <button id="play-480p" onclick="copyAndOpenMXPlayer('480p')" style="display: none;">Play 480p</button>
-    <button id="play-720p" onclick="copyAndOpenMXPlayer('720p')" style="display: none;">Play 720p</button>
-    <button id="play-1080p" onclick="copyAndOpenMXPlayer('1080p')" style="display: none;">Play 1080p</button>
+    <button id="play-480p" onclick="LoadLink('480p')" style="display: none;">Play 480p</button>
+    <button id="play-720p" onclick="LoadLink('720p')" style="display: none;">Play 720p</button>
+    <button id="play-1080p" onclick="LoadLink('1080p')" style="display: none;">Play 1080p</button>
   </div>
   <p class="placeholder" id="placeholder">No movie selected. Please go back and select a movie.</p>
 
@@ -106,7 +106,7 @@
     }
 
     // Function to fetch the streaming link and open MX Player app
-    function copyAndOpenMXPlayer(quality) {
+    function LoadLink(quality) {
       if (!movieFolderName) {
         alert("No movie selected.");
         return;
