@@ -105,13 +105,6 @@
       document.getElementById("placeholder").style.display = "none";
     }
 
-    // Function to fetch the streaming link and open MX Player
-    function copyAndOpenMXPlayer(quality) {
-      if (!movieFolderName) {
-        alert("No movie selected.");
-        return;
-      }
-
       // Construct the path to the .txt file
       const txtPath = `Movies/${movieFolderName}/${movieFolderName}-${quality}.txt`;
 
@@ -124,9 +117,8 @@
           return response.text();
         })
         .then((streamingUrl) => {
-          // Trim the URL and copy it to clipboard, then open MX Player
+          // Trim the URL and open it in MX Player app
           const trimmedUrl = streamingUrl.trim();
-          copyToClipboard(trimmedUrl);
           openInMXPlayer(trimmedUrl);
         })
         .catch((error) => {
@@ -134,21 +126,10 @@
         });
     }
 
-    // Function to copy the URL to clipboard
-    function copyToClipboard(url) {
-      const textarea = document.createElement("textarea");
-      textarea.value = url;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-    }
-
-    // Function to open the URL in MX Player (using www.mxplayer.in)
+    // Function to open the URL in MX Player app
     function openInMXPlayer(url) {
-      // Open MX Player website with the streaming URL
-      const mxPlayerUrl = `https://www.mxplayer.in/?url=${encodeURIComponent(url)}`;
-      window.location.href = mxPlayerUrl;
+      const mxPlayerAppUrl = `intent:${url}#Intent;package=com.mxtech.videoplayer.ad;end`;
+      window.location.href = mxPlayerAppUrl;
     }
   </script>
 </body>
