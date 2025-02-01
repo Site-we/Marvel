@@ -105,6 +105,13 @@
       document.getElementById("placeholder").style.display = "none";
     }
 
+    // Function to fetch the streaming link and open MX Player app
+    function copyAndOpenMXPlayer(quality) {
+      if (!movieFolderName) {
+        alert("No movie selected.");
+        return;
+      }
+
       // Construct the path to the .txt file
       const txtPath = `Movies/${movieFolderName}/${movieFolderName}-${quality}.txt`;
 
