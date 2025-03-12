@@ -52,7 +52,7 @@ header h1 {
   width: 70%; /* Adjust width to make it shorter */
   max-width: 500px; /* Adjust max width */
   padding: 8px 8px; /* Decrease padding to adjust height */
-  height: 25px; /* Ensure same height as button */
+  height: 20px; /* Ensure same height as button */
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
@@ -68,7 +68,7 @@ header h1 {
 
 .search-container button {
   padding: 8px 8px; /* Decrease padding to adjust height */
-  height: 36px; /* Ensure same height as input */
+  height: 30px; /* Ensure same height as input */
   width: auto; /* Decrease width */
   border: none;
   background-color: #fff;
