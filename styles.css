@@ -52,6 +52,7 @@ header h1 {
   width: 70%; /* Adjust width to make it shorter */
   max-width: 500px; /* Adjust max width */
   padding: 12px 15px;
+  height: 44px; /* Ensure same height as button */
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
@@ -74,7 +75,7 @@ header h1 {
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  text-transform: uppercase;
+  text-transform: capitalize; /* First letter capitalized, others small */
   transition: background-color 0.3s ease, transform 0.2s ease;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
@@ -95,7 +96,7 @@ header h1 {
 
 #gallery img {
   width: 100%;
-  max-width: 300px; /* Increase max width */
+  max-width: 350px; /* Increase max width */
   height: auto;
   object-fit: cover;
   border-radius: 10px;
@@ -162,7 +163,7 @@ header h1 {
   display: block;
   margin: 0 auto;
   width: 100%; /* Increase image width */
-  max-width: 300px; /* Increase max width */
+  max-width: 350px; /* Increase max width */
 }
 
 .movie-container p {
@@ -299,7 +300,7 @@ button:hover {
   }
 
   .search-container input {
-    background-color: rgba(0, 0, 0, 1);
+    background-color: rgba( 0, 0, 0, 1);
     color: #ffffff;
   }
 
