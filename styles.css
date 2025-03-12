@@ -252,7 +252,11 @@ button:hover {
 
 @media screen and (max-width: 480px) {
   #gallery {
-    grid-template-columns: 1fr; /* Single column for very small screens */
+    grid-template-columns: repeat(2, 1fr); /* Ensure at least 2 columns for very small screens */
+  }
+
+  #gallery img {
+    max-width: 150px; /* Decrease image size for small screens */
   }
 
   #search {
