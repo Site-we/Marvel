@@ -51,8 +51,8 @@ header h1 {
 .search-container input {
   width: 70%; /* Adjust width to make it shorter */
   max-width: 500px; /* Adjust max width */
-  padding: 12px 15px;
-  height: 44px; /* Ensure same height as button */
+  padding: 8px 15px; /* Decrease padding to adjust height */
+  height: 36px; /* Ensure same height as button */
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
@@ -67,7 +67,9 @@ header h1 {
 }
 
 .search-container button {
-  padding: 10px 25px;
+  padding: 8px 15px; /* Decrease padding to adjust height */
+  height: 36px; /* Ensure same height as input */
+  width: auto; /* Decrease width */
   border: none;
   background-color: #fff;
   color: #e62429;
@@ -89,14 +91,14 @@ header h1 {
 #gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for responsive layout */
-  gap: 20px; /* Spacing between images */
+  gap: 10px; /* Decrease gap between images */
   padding: 20px;
   justify-items: center;
 }
 
 #gallery img {
   width: 100%;
-  max-width: 350px; /* Increase max width */
+  max-width: 400px; /* Increase max width */
   height: auto;
   object-fit: cover;
   border-radius: 10px;
@@ -163,7 +165,7 @@ header h1 {
   display: block;
   margin: 0 auto;
   width: 100%; /* Increase image width */
-  max-width: 350px; /* Increase max width */
+  max-width: 400px; /* Increase max width */
 }
 
 .movie-container p {
@@ -300,7 +302,7 @@ button:hover {
   }
 
   .search-container input {
-    background-color: rgba( 0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 1);
     color: #ffffff;
   }
 
