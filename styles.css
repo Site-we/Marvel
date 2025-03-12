@@ -33,7 +33,7 @@ header {
 
 header h1 {
   margin: 30;
-  font-size: 12rem; /* Increased font size */
+  font-size: 30rem; /* Increased font size */
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff; /* White color for text in header */
@@ -52,8 +52,8 @@ header h1 {
   width: 70%; /* Adjust width to make it shorter */
   max-width: 500px; /* Adjust max width */
   padding: 8px 8px; /* Decrease padding to adjust height */
-  height: 40px; /* Increased height */
-  font-size: 6rem; /* Increased font size */
+  height: 20px; /* Increased height */
+  font-size: 20rem; /* Increased font size */
   border: none;
   border-radius: 5px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
