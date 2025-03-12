@@ -31,6 +31,9 @@ function displayMovies() {
   }
 
   movies.forEach((movie) => {
+    const movieContainer = document.createElement("div");
+    movieContainer.classList.add("movie-container");
+
     const imgElement = document.createElement("img");
 
     // Ensure the movie object has a name
@@ -53,7 +56,12 @@ function displayMovies() {
       imgElement.src = 'fallback.jpg'; // Optional fallback image
     };
 
-    gallery.appendChild(imgElement);
+    const movieNameElement = document.createElement("p");
+    movieNameElement.textContent = movie.name;
+
+    movieContainer.appendChild(imgElement);
+    movieContainer.appendChild(movieNameElement);
+    gallery.appendChild(movieContainer);
   });
 }
 
