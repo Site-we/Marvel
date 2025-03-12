@@ -94,8 +94,8 @@ header h1 {
 }
 
 #gallery img {
-  width: 90%;
-  max-width: 250px;
+  width: 100%;
+  max-width: 300px; /* Increase max width */
   height: auto;
   object-fit: cover;
   border-radius: 10px;
@@ -153,6 +153,7 @@ header h1 {
   background-color: #ff8080;
 }
 
+/* Movie Container Styling */
 .movie-container {
   text-align: center;
 }
@@ -160,11 +161,13 @@ header h1 {
 .movie-container img {
   display: block;
   margin: 0 auto;
+  width: 100%; /* Increase image width */
+  max-width: 300px; /* Increase max width */
 }
 
 .movie-container p {
   margin-top: 10px;
-  font-size: 1rem;
+  font-size: 1.2rem; /* Increase font size */
   color: #000; /* Adjust color if needed */
 }
 
