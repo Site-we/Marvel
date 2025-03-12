@@ -39,20 +39,20 @@ header h1 {
   color: #ffffff; /* White color for text in header */
 }
 
-/* Search Bar Styles */
+/* Search Container Styles */
 .search-container {
-  margin: 10px 0;
   display: flex;
-  flex-wrap: nowrap; /* Ensure items are inline */
-  justify-content: center;
+  justify-content: flex-end; /* Align items at the bottom */
+  align-items: flex-end; /* Align items at the bottom */
   gap: 10px;
+  margin-top: auto; /* Push to the bottom of the container */
 }
 
 .search-container input {
   width: 70%; /* Adjust width to make it shorter */
   max-width: 500px; /* Adjust max width */
   padding: 8px 8px; /* Decrease padding to adjust height */
-  height: 20px; /* Ensure same height as button */
+  height: 30px; /* Ensure same height as button */
   border: none;
   border-radius: 5px;
   font-size: 1.2rem;
