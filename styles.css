@@ -42,7 +42,7 @@ header h1 {
 /* Search Container Styles */
 .search-container {
   display: flex;
-  gap:20px
+  gap:8px
   justify-content: flex-end; /* Align items at the bottom */
   align-items: flex-end; /* Align items at the bottom */
   margin-top: auto; /* Push to the bottom of the container */
