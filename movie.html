@@ -7,23 +7,22 @@
     <link rel="stylesheet" href="styles2.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Movie Player</h1>
-        </header>
-        <main>
-            <div class="movie-details">
-                <h2 id="movie-title">Loading...</h2>
-                <div class="buttons">
-                    <button id="download-button">Download</button>
-                    <button id="play-button">Play with MX Player</button>
-                </div>
-            </div>
-        </main>
-        <footer>
-            <p>&copy; 2025 Movie Player</p>
-        </footer>
-    </div>
+    <header>
+        <h1>Movie Player</h1>
+    </header>
+    <main>
+        <div id="search-result" class="search-result">
+            <h2 id="movie-title">Loading...</h2>
+            <img id="movie-poster" src="" alt="Movie Poster" style="display:none;">
+            <br>
+            <button id="download-btn" style="display:none;">Download</button>
+            <br>
+            <button id="mx-player-btn" style="display:none;">Play with MX Player</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Movie Player</p>
+    </footer>
     <script src="script-movie.js"></script>
 </body>
 </html>
