@@ -49,8 +49,11 @@ function displayMovies() {
     imgElement.alt = movie.name;
     imgElement.title = movie.name;
 
-    // Handle click event
-    imgElement.onclick = () => searchMovieByImage(movie.name);
+    // Handle click event to load URL with query parameter
+    imgElement.onclick = () => {
+      const queryString = `movie.html?movie=${encodeURIComponent(movie.name)}`;
+      window.location.href = queryString;
+    };
 
     imgElement.onerror = () => {
       console.error(`Image not found for movie: ${movie.name}`);
