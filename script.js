@@ -83,18 +83,8 @@ function searchMovie() {
     img.src = imagePath;
 
     img.onload = function () {
-      // Add search result with buttons
-      resultContainer.innerHTML = `
-        <h2>Result for "${query}"</h2>
-        <img src="${imagePath}" alt="${query}">
-        <br>
-        <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
-        <br>
-        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
-      `;
-      gallery.style.display = "none"; // Hide the gallery
-      // Apply fade-in animation to the search result
-      resultContainer.classList.add("fade-in");
+      // Redirect to search.html with search results
+      window.location.href = `search.html?query=${formattedQuery}`;
     };
 
     img.onerror = function () {
