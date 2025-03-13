@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase();
         const resultContainer = document.getElementById("search-result");
         const movieTitleHeader = document.getElementById("movie-title-header");
-        const movieTitle = document.getElementById("movie-title");
         const moviePoster = document.getElementById("movie-poster");
         const downloadButton = document.getElementById("download-btn");
         const mxPlayerButton = document.getElementById("mx-player-btn");
