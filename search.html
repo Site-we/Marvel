@@ -9,10 +9,14 @@
 <body>
   <header>
     <h1>Search Results</h1>
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Search your favorite Marvel movie...">
+      <button onclick="searchMovie()">Search</button>
+    </div>
   </header>
   <main>
     <div id="search-result" class="search-result">
-      <button id="download-btn" style="display: none;" onclick="handleDownload()">Download</button>
+      <!-- Search results will be dynamically inserted here -->
     </div>
   </main>
   <script src="search-script.js"></script>
