@@ -1,4 +1,5 @@
 let movies = [];
+
 // Load movies from JSON file
 fetch('movies.json')
   .then(response => {
@@ -69,34 +70,20 @@ function displayMovies() {
 function searchMovie() {
   const searchInput = document.getElementById("search");
   const query = searchInput.value.trim(); // Keep original search text
-  const resultContainer = document.getElementById("search-result");
-  const gallery = document.getElementById("gallery");
-
-  resultContainer.innerHTML = ""; // Clear previous results
 
   if (query) {
-    const formattedQuery = query.replace(/\s+/g, "").toLowerCase();
-    const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
-    const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
-
-    const img = new Image();
-    img.src = imagePath;
-
-    img.onload = function () {
-      // Redirect to search.html with search results
-      window.location.href = `search.html?query=${formattedQuery}`;
-    };
-
-    img.onerror = function () {
-      // Fallback to alternative search
-      fallbackSearch(query, resultContainer, gallery);
-    };
+    // Save the search text to local storage
+    localStorage.setItem("searchQuery", query);
+    // Redirect to search.html
+    window.location.href = "search.html";
   } else {
     // Display message for empty input
+    const resultContainer = document.getElementById("search-result");
     resultContainer.innerHTML = `
       <h2>No input provided</h2>
       <p>Please enter a movie name to search.</p>
     `;
+    const gallery = document.getElementById("gallery");
     gallery.style.display = "grid"; // Show the gallery
   }
 
