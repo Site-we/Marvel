@@ -32,8 +32,9 @@ header {
 }
 
 header h1 {
+header h1 {
   margin: 30;
-  font-size: 30rem; /* Increased font size */
+  font-size: 1.3rem; /* Increased font size */
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff; /* White color for text in header */
@@ -43,17 +44,16 @@ header h1 {
 .search-container {
   display: flex;
   gap: 16px; /* Added gap between search box and button */
-  justify-content: flex-end; /* Align items at the bottom */
+  justify-content: center; /* Align items at the center */
   align-items: flex-end; /* Align items at the bottom */
   margin-top: auto; /* Push to the bottom of the container */
 }
-
 .search-container input {
   width: 70%; /* Adjust width to make it shorter */
   max-width: 500px; /* Adjust max width */
   padding: 8px 8px; /* Decrease padding to adjust height */
   height: 20px; /* Increased height */
-  font-size: 20rem; /* Increased font size */
+  font-size: 1.2rem; /* Increased font size */
   border: none;
   border-radius: 5px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
