@@ -26,14 +26,14 @@ header {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  padding: 20px; /* Adjusted padding */
+  padding: 10px;
   background-color: #F0131E;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 header h1 {
-  margin: 0; /* Adjusted margin */
-  font-size: 2rem; /* Adjusted font size */
+  margin: 30;
+  font-size: 30rem; /* Increased font size */
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff; /* White color for text in header */
@@ -42,17 +42,18 @@ header h1 {
 /* Search Container Styles */
 .search-container {
   display: flex;
-  gap: 8px; /* Adjusted gap between search box and button */
-  justify-content: center; /* Center align items */
-  align-items: center; /* Center align items */
-  margin-top: 10px; /* Added margin-top */
-  flex-wrap: wrap; /* Ensure items wrap on smaller screens */
+  gap: 16px; /* Added gap between search box and button */
+  justify-content: flex-end; /* Align items at the bottom */
+  align-items: flex-end; /* Align items at the bottom */
+  margin-top: auto; /* Push to the bottom of the container */
 }
 
 .search-container input {
-  flex: 1; /* Allow input to grow */
-  padding: 8px; /* Adjusted padding */
-  font-size: 1rem; /* Adjusted font size */
+  width: 70%; /* Adjust width to make it shorter */
+  max-width: 500px; /* Adjust max width */
+  padding: 8px 8px; /* Decrease padding to adjust height */
+  height: 20px; /* Increased height */
+  font-size: 20rem; /* Increased font size */
   border: none;
   border-radius: 5px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
@@ -66,11 +67,13 @@ header h1 {
 }
 
 .search-container button {
-  padding: 8px; /* Adjusted padding */
+  padding: 8px 8px; /* Decrease padding to adjust height */
+  height: 36px; /* Ensure same height as input */
+  width: auto; /* Decrease width */
   border: none;
   background-color: #fff;
   color: #e62429;
-  font-size: 1rem; /* Adjusted font size */
+  font-size: 1.1rem;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
@@ -87,14 +90,15 @@ header h1 {
 /* Gallery Container Styling */
 #search-result {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjusted for responsive layout */
-  gap: 10px; /* Adjusted gap */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for responsive layout */
+  gap: 10px; /* Decrease gap between images */
   padding: 20px;
   justify-items: center;
 }
 
 #search-result img {
   width: 100%;
+  max-width: 400px; /* Increase max width */
   height: auto;
   object-fit: cover;
   border-radius: 10px;
@@ -114,22 +118,22 @@ header h1 {
 .movie-container img {
   display: block;
   margin: 0 auto;
-  width: 100%;
-  max-width: 300px; /* Adjusted max width */
+  width: 100%; /* Increase image width */
+  max-width: 400px; /* Increase max width */
 }
 
 .movie-container p {
   margin-top: 10px;
-  font-size: 1rem; /* Adjusted font size */
+  font-size: 1.2rem; /* Increase font size */
   color: #000; /* Adjust color if needed */
 }
 
 /* Search Result Styling */
 .search-result {
-  margin-top: 20px;
+  margin-top: 30px;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 .search-result.fade-in {
@@ -156,21 +160,15 @@ button:hover {
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 768px) {
   #search-result {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjusted for smaller screens */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  #search {
+    font-size: 14px;
   }
 
   header h1 {
     font-size: 1.5rem;
-  }
-
-  .search-container input,
-  .search-container button {
-    width: 100%; /* Ensure full width for smaller screens */
-    margin-bottom: 8px; /* Add margin for spacing */
-  }
-
-  .search-container {
-    flex-direction: column; /* Stack items vertically */
   }
 }
 
@@ -180,7 +178,11 @@ button:hover {
   }
 
   #search-result img {
-    max-width: 100px; /* Decrease image size for small screens */
+    max-width: 150px; /* Decrease image size for small screens */
+  }
+
+  #search {
+    font-size: 12px;
   }
 
   header h1 {
