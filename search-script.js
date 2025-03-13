@@ -44,27 +44,31 @@ function searchMovie(query) {
         img.src = imagePath;
 
         img.onload = function () {
-          resultContainer.innerHTML += `
-            <h2>Result for "${movie.name}"</h2>
-            <img src="${imagePath}" alt="${movie.name}">
-            <br>
-            <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
-            <br>
-            <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
-          `;
-          // Apply fade-in animation to the search result
-          resultContainer.classList.add("fade-in");
+          const movieContainer = document.createElement("div");
+          movieContainer.classList.add("movie-container");
+
+          const imgElement = document.createElement("img");
+          imgElement.src = imagePath;
+          imgElement.alt = movie.name;
+          imgElement.title = movie.name;
+
+          const movieNameElement = document.createElement("p");
+          movieNameElement.textContent = movie.name;
+
+          movieContainer.appendChild(imgElement);
+          movieContainer.appendChild(movieNameElement);
+          resultContainer.appendChild(movieContainer);
         };
 
         img.onerror = function () {
-          resultContainer.innerHTML += `
-            <h2>Result for "${movie.name}"</h2>
-            <p>Image not found.</p>
-            <br>
-            <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
-            <br>
-            <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
-          `;
+          const movieContainer = document.createElement("div");
+          movieContainer.classList.add("movie-container");
+
+          const movieNameElement = document.createElement("p");
+          movieNameElement.textContent = movie.name;
+
+          movieContainer.appendChild(movieNameElement);
+          resultContainer.appendChild(movieContainer);
         };
       });
     } else {
@@ -105,27 +109,31 @@ function fallbackSearch(query, resultContainer) {
     img.src = imagePath;
 
     img.onload = function () {
-      resultContainer.innerHTML += `
-        <h2>Result for "${matchedMovie.name}"</h2>
-        <img src="${imagePath}" alt="${matchedMovie.name}">
-        <br>
-        <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
-        <br>
-        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
-      `;
-      // Apply fade-in animation to the search result
-      resultContainer.classList.add("fade-in");
+      const movieContainer = document.createElement("div");
+      movieContainer.classList.add("movie-container");
+
+      const imgElement = document.createElement("img");
+      imgElement.src = imagePath;
+      imgElement.alt = matchedMovie.name;
+      imgElement.title = matchedMovie.name;
+
+      const movieNameElement = document.createElement("p");
+      movieNameElement.textContent = matchedMovie.name;
+
+      movieContainer.appendChild(imgElement);
+      movieContainer.appendChild(movieNameElement);
+      resultContainer.appendChild(movieContainer);
     };
 
     img.onerror = function () {
-      resultContainer.innerHTML += `
-        <h2>Result for "${matchedMovie.name}"</h2>
-        <p>Image not found.</p>
-        <br>
-        <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
-        <br>
-        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
-      `;
+      const movieContainer = document.createElement("div");
+      movieContainer.classList.add("movie-container");
+
+      const movieNameElement = document.createElement("p");
+      movieNameElement.textContent = matchedMovie.name;
+
+      movieContainer.appendChild(movieNameElement);
+      resultContainer.appendChild(movieContainer);
     };
   } else {
     resultContainer.innerHTML = `
