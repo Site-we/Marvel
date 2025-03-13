@@ -43,11 +43,10 @@ header h1 {
 .search-container {
   display: flex;
   gap: 16px; /* Added gap between search box and button */
-  justify-content: flex-end; /* Align items at the bottom */
+  justify-content: center; /* Align items at the center */
   align-items: flex-end; /* Align items at the bottom */
   margin-top: auto; /* Push to the bottom of the container */
 }
-
 .search-container input {
   width: 70%; /* Adjust width to make it shorter */
   max-width: 500px; /* Adjust max width */
