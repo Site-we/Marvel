@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const movieName = urlParams.get('name');
+    const movieName = urlParams.get('movie');
 
     if (movieName) {
         const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase();
