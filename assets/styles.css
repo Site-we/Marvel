@@ -26,14 +26,14 @@ header {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  padding: 10px;
+  padding: 1.3px;
   background-color: #F0131E;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 header h1 {
   margin: 30;
-  font-size: 30rem; /* Increased font size */
+  font-size: 1.3rem; /* Increased font size */
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff; /* White color for text in header */
