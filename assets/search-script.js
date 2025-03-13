@@ -24,15 +24,18 @@ fetch('movies.json')
 function searchMovie(query) {
   const searchInput = document.getElementById("search");
   const resultContainer = document.getElementById("search-result");
+  const searchMessage = document.getElementById("search-message"); // Get the search message container
 
   if (!query) {
     query = searchInput.value.trim(); // Get query from input if not provided
   }
 
   resultContainer.innerHTML = ""; // Clear previous results
+  searchMessage.innerHTML = ""; // Clear previous search message
 
   if (query) {
     const formattedQuery = query.replace(/\s+/g, "").toLowerCase();
+    searchMessage.innerHTML = `Search results for "${query}"`; // Update search message
     const results = movies.filter(movie => fuzzyMatch(movie.name, query) || movie.keywords.some(keyword => fuzzyMatch(keyword, query)));
 
     if (results.length > 0) {
