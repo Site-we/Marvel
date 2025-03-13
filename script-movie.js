@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         img.onload = function () {
             const formattedMovieName = movieName.replace(/\s+/g, "");
             movieTitleHeader.textContent = formattedMovieName;
-            movieTitle.textContent = formattedMovieName;
             moviePoster.src = imagePath;
             moviePoster.style.display = "block";
             downloadButton.style.display = "inline-block";
@@ -32,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         img.onerror = function () {
             const formattedMovieName = movieName.replace(/\s+/g, "");
-            movieTitle.textContent = `No results found for "${formattedMovieName}"`;
+            movieTitleHeader.textContent = `No results found for "${formattedMovieName}"`;
         };
     } else {
         document.getElementById('movie-title').textContent = 'Movie not found';
