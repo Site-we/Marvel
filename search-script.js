@@ -1,4 +1,5 @@
 let movies = [];
+
 // Load movies from JSON file
 fetch('movies.json')
   .then(response => {
@@ -9,10 +10,10 @@ fetch('movies.json')
   })
   .then(data => {
     movies = data; // Save loaded movies
-    const urlParams = new URLSearchParams(window.location.search);
-    const query = urlParams.get('query');
-    if (query) {
-      searchMovie(query);
+    const searchQuery = localStorage.getItem("searchQuery");
+    if (searchQuery) {
+      document.getElementById("search").value = searchQuery; // Display search text from local storage
+      searchMovie(searchQuery); // Perform search with stored query
     }
   })
   .catch(error => {
@@ -21,36 +22,54 @@ fetch('movies.json')
 
 // Search for the movie
 function searchMovie(query) {
+  const searchInput = document.getElementById("search");
   const resultContainer = document.getElementById("search-result");
+
+  if (!query) {
+    query = searchInput.value.trim(); // Get query from input if not provided
+  }
 
   resultContainer.innerHTML = ""; // Clear previous results
 
   if (query) {
     const formattedQuery = query.replace(/\s+/g, "").toLowerCase();
-    const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
-    const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
+    const results = movies.filter(movie => fuzzyMatch(movie.name, query) || movie.keywords.some(keyword => fuzzyMatch(keyword, query)));
 
-    const img = new Image();
-    img.src = imagePath;
+    if (results.length > 0) {
+      results.forEach(movie => {
+        const formattedName = movie.name.replace(/\s+/g, "").toLowerCase();
+        const imagePath = `Movies/${formattedName}/${formattedName}.jpg`;
 
-    img.onload = function () {
-      // Add search result with buttons
-      resultContainer.innerHTML = `
-        <h2>Result for "${query}"</h2>
-        <img src="${imagePath}" alt="${query}">
-        <br>
-        <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
-        <br>
-        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
-      `;
-      // Apply fade-in animation to the search result
-      resultContainer.classList.add("fade-in");
-    };
+        const img = new Image();
+        img.src = imagePath;
 
-    img.onerror = function () {
-      // Fallback to alternative search
+        img.onload = function () {
+          resultContainer.innerHTML += `
+            <h2>Result for "${movie.name}"</h2>
+            <img src="${imagePath}" alt="${movie.name}">
+            <br>
+            <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
+            <br>
+            <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
+          `;
+          // Apply fade-in animation to the search result
+          resultContainer.classList.add("fade-in");
+        };
+
+        img.onerror = function () {
+          resultContainer.innerHTML += `
+            <h2>Result for "${movie.name}"</h2>
+            <p>Image not found.</p>
+            <br>
+            <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
+            <br>
+            <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
+          `;
+        };
+      });
+    } else {
       fallbackSearch(query, resultContainer);
-    };
+    }
   } else {
     // Display message for empty input
     resultContainer.innerHTML = `
@@ -58,6 +77,9 @@ function searchMovie(query) {
       <p>Please enter a movie name to search.</p>
     `;
   }
+
+  // Clear the search input after performing the search
+  searchInput.value = ''; // Clear the search bar
 }
 
 // Fallback logic for alternative search
@@ -75,8 +97,36 @@ function fallbackSearch(query, resultContainer) {
   });
 
   if (matchedMovie) {
-    // Automatically search for the matched movie
-    searchMovieByImage(matchedMovie.name);
+    // Display matched movie
+    const formattedName = matchedMovie.name.replace(/\s+/g, "").toLowerCase();
+    const imagePath = `Movies/${formattedName}/${formattedName}.jpg`;
+
+    const img = new Image();
+    img.src = imagePath;
+
+    img.onload = function () {
+      resultContainer.innerHTML += `
+        <h2>Result for "${matchedMovie.name}"</h2>
+        <img src="${imagePath}" alt="${matchedMovie.name}">
+        <br>
+        <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
+        <br>
+        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
+      `;
+      // Apply fade-in animation to the search result
+      resultContainer.classList.add("fade-in");
+    };
+
+    img.onerror = function () {
+      resultContainer.innerHTML += `
+        <h2>Result for "${matchedMovie.name}"</h2>
+        <p>Image not found.</p>
+        <br>
+        <button id="download-btn" onclick="redirectToDownload('${formattedName}')">Download</button>
+        <br>
+        <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedName}')">Play with MX Player</button>
+      `;
+    };
   } else {
     resultContainer.innerHTML = `
       <h2>No results found for "${query}"</h2>
@@ -87,46 +137,9 @@ function fallbackSearch(query, resultContainer) {
   }
 }
 
-// Normalize strings for consistency (e.g., remove extra spaces, lowercase)
-function normalizeString(str) {
-  return str.toLowerCase().replace(/\s+/g, " ").trim();
-}
-
 // Fuzzy match function to check if a keyword is part of the search input
 function fuzzyMatch(input, keyword) {
   return input.toLowerCase().includes(keyword.toLowerCase());
-}
-
-// Search by image or programmatically fill input and search
-function searchMovieByImage(movieName) {
-  const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase(); // Format query for file paths
-  const resultContainer = document.getElementById("search-result");
-
-  const imagePath = `Movies/${formattedQuery}/${formattedQuery}.jpg`;
-  const txtPath = `Movies/${formattedQuery}/${formattedQuery}.txt`;
-
-  const img = new Image();
-  img.src = imagePath;
-
-  img.onload = function () {
-    resultContainer.innerHTML = `
-      <h2>Result for "${movieName}"</h2>
-      <img src="${imagePath}" alt="${movieName}">
-      <br>
-      <button id="download-btn" onclick="redirectToDownload('${formattedQuery}')">Download</button>
-      <br>
-      <button id="mx-player-btn" onclick="redirectToMXPlayer('${formattedQuery}')">Play with MX Player</button>
-    `;
-    // Apply fade-in animation to the search result
-    resultContainer.classList.add("fade-in");
-  };
-
-  img.onerror = function () {
-    resultContainer.innerHTML = `
-      <h2>No results found for "${movieName}"</h2>
-      <p>Make sure the movie name matches the folder and file structure.</p>
-    `;
-  };
 }
 
 // Redirect to download.html with the folder name stored in local storage
@@ -140,3 +153,11 @@ function redirectToMXPlayer(folderName) {
   localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
   window.location.href = "mxplayer.html"; // Redirect to mxplayer.html
 }
+
+// Search on pressing Enter key
+document.getElementById("search").addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    searchMovie(); // Call the search function
+    this.blur(); // Close the keyboard
+  }
+});
