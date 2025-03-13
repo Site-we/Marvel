@@ -1,0 +1,222 @@
+/* Ensure binary rain canvas is positioned behind other content */
+#binary-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Place it behind other elements */
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* Prevent interactions */
+}
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; /* Black background to enhance binary rain */
+  color: #ffffff; /* White text color for contrast */
+  text-align: center;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Header Styles */
+header {
+  background-image: url('Images/Header.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  padding: 10px;
+  background-color: #F0131E;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+  margin: 30;
+  font-size: 30rem; /* Increased font size */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff; /* White color for text in header */
+}
+
+/* Search Container Styles */
+.search-container {
+  display: flex;
+  gap: 16px; /* Added gap between search box and button */
+  justify-content: flex-end; /* Align items at the bottom */
+  align-items: flex-end; /* Align items at the bottom */
+  margin-top: auto; /* Push to the bottom of the container */
+}
+
+.search-container input {
+  width: 70%; /* Adjust width to make it shorter */
+  max-width: 500px; /* Adjust max width */
+  padding: 8px 8px; /* Decrease padding to adjust height */
+  height: 20px; /* Increased height */
+  font-size: 20rem; /* Increased font size */
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  outline: none;
+  background-color: rgba(255, 255, 255, 1); /* Dark background with transparency */
+  color: #000000;
+}
+
+.search-container input:focus {
+  box-shadow: 0px 0px 8px rgba(230, 36, 41, 0.8);
+}
+
+.search-container button {
+  padding: 8px 8px; /* Decrease padding to adjust height */
+  height: 36px; /* Ensure same height as input */
+  width: auto; /* Decrease width */
+  border: none;
+  background-color: #fff;
+  color: #e62429;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: capitalize; /* First letter capitalized, others small */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.search-container button:hover {
+  background-color: #ffffff;
+  transform: scale(1.0);
+}
+
+/* Gallery Container Styling */
+#search-result {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for responsive layout */
+  gap: 10px; /* Decrease gap between images */
+  padding: 20px;
+  justify-items: center;
+}
+
+#search-result img {
+  width: 100%;
+  max-width: 400px; /* Increase max width */
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#search-result img:hover {
+  transform: scale(1.1); /* Zoom on hover */
+}
+
+/* Movie Container Styling */
+.movie-container {
+  text-align: center;
+}
+
+.movie-container img {
+  display: block;
+  margin: 0 auto;
+  width: 100%; /* Increase image width */
+  max-width: 400px; /* Increase max width */
+}
+
+.movie-container p {
+  margin-top: 10px;
+  font-size: 1.2rem; /* Increase font size */
+  color: #000; /* Adjust color if needed */
+}
+
+/* Search Result Styling */
+.search-result {
+  margin-top: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.search-result.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Button Styling */
+button {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #444;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+  #search-result {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  #search {
+    font-size: 14px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #search-result {
+    grid-template-columns: repeat(2, 1fr); /* Ensure at least 2 columns for very small screens */
+  }
+
+  #search-result img {
+    max-width: 150px; /* Decrease image size for small screens */
+  }
+
+  #search {
+    font-size: 12px;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Dark Theme Styles */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  header {
+    background-color: #F0131E;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .search-container input {
+    background-color: rgba(0, 0, 0, 1);
+    color: #ffffff;
+  }
+
+  .search-container button {
+    background-color: #333333;
+    color: #e62429;
+  }
+
+  .gallery img {
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2);
+  }
+
+  .movie-container p {
+    color: #ffffff; /* Change movie name text to white */
+  }
+    }
