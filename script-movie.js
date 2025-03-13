@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const movieName = urlParams.get('name');
+    const movieName = urlParams.get('movie');
 
     if (movieName) {
         const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase();
         const resultContainer = document.getElementById("search-result");
         const movieTitleHeader = document.getElementById("movie-title-header");
-        const movieTitle = document.getElementById("movie-title");
         const moviePoster = document.getElementById("movie-poster");
         const downloadButton = document.getElementById("download-btn");
         const mxPlayerButton = document.getElementById("mx-player-btn");
@@ -17,8 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = imagePath;
 
         img.onload = function () {
-            movieTitleHeader.textContent = movieName;
-            movieTitle.textContent = movieName;
+            const formattedMovieName = movieName.replace(/\s+/g, "");
+            movieTitleHeader.textContent = formattedMovieName;
+            movieTitle.textContent = formattedMovieName;
             moviePoster.src = imagePath;
             moviePoster.style.display = "block";
             downloadButton.style.display = "inline-block";
@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         img.onerror = function () {
-            movieTitle.textContent = `No results found for "${movieName}"`;
+            const formattedMovieName = movieName.replace(/\s+/g, "");
+            movieTitle.textContent = `No results found for "${formattedMovieName}"`;
         };
     } else {
         document.getElementById('movie-title').textContent = 'Movie not found';
