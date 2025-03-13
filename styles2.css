@@ -48,6 +48,8 @@ header h1 {
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    margin: 0 auto; /* Center the image horizontally */
+    display: block; /* Ensure the image is displayed as a block element */
 }
 
 /* Button Styling */
