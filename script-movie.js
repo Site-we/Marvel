@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (movieName) {
         const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase();
         const resultContainer = document.getElementById("search-result");
+        const movieTitleHeader = document.getElementById("movie-title-header");
         const movieTitle = document.getElementById("movie-title");
         const moviePoster = document.getElementById("movie-poster");
         const downloadButton = document.getElementById("download-btn");
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = imagePath;
 
         img.onload = function () {
+            movieTitleHeader.textContent = movieName;
             movieTitle.textContent = movieName;
             moviePoster.src = imagePath;
             moviePoster.style.display = "block";
