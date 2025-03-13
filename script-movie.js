@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formattedQuery = movieName.replace(/\s+/g, "").toLowerCase();
         const resultContainer = document.getElementById("search-result");
         const movieTitleHeader = document.getElementById("movie-title-header");
+        const movieTitle = document.getElementById("movie-title");
         const moviePoster = document.getElementById("movie-poster");
         const downloadButton = document.getElementById("download-btn");
         const mxPlayerButton = document.getElementById("mx-player-btn");
@@ -16,9 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
         img.src = imagePath;
 
         img.onload = function () {
-            const formattedMovieName = movieName.replace(/\s+/g, "");
-            movieTitleHeader.textContent = formattedMovieName;
-            movieTitle.textContent = formattedMovieName;
+            movieTitleHeader.textContent = movieName;
+            movieTitle.textContent = movieName;
             moviePoster.src = imagePath;
             moviePoster.style.display = "block";
             downloadButton.style.display = "inline-block";
@@ -31,8 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         img.onerror = function () {
-            const formattedMovieName = movieName.replace(/\s+/g, "");
-            movieTitle.textContent = `No results found for "${formattedMovieName}"`;
+            movieTitle.textContent = `No results found for "${movieName}"`;
         };
     } else {
         document.getElementById('movie-title').textContent = 'Movie not found';
