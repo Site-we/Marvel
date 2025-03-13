@@ -33,7 +33,7 @@ header {
 
 header h1 {
   margin: 30;
-  font-size: 30rem; /* Increased font size */
+  font-size: 1.3rem; /* Increased font size */
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff; /* White color for text in header */
