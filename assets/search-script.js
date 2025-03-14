@@ -162,18 +162,6 @@ function fuzzyMatch(input, keyword) {
   return input.toLowerCase().includes(keyword.toLowerCase());
 }
 
-// Redirect to download.html with the folder name stored in local storage
-function redirectToDownload(folderName) {
-  localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
-  window.location.href = "download.html"; // Redirect to download.html
-}
-
-// Redirect to mxplayer.html with the folder name stored in local storage
-function redirectToMXPlayer(folderName) {
-  localStorage.setItem("movieFolderName", folderName); // Save folder name to local storage
-  window.location.href = "mxplayer.html"; // Redirect to mxplayer.html
-}
-
 // Search on pressing Enter key
 document.getElementById("search").addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
