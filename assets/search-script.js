@@ -52,6 +52,12 @@ function searchMovie(query) {
           imgElement.alt = movie.name;
           imgElement.title = movie.name;
 
+          // Add onclick event for redirection
+          imgElement.onclick = () => {
+            const queryString = `movie.html?movie=${encodeURIComponent(movie.name)}`;
+            window.location.href = queryString;
+          };
+
           const movieNameElement = document.createElement("p");
           movieNameElement.textContent = movie.name;
 
@@ -116,6 +122,12 @@ function fallbackSearch(query, resultContainer) {
       imgElement.src = imagePath;
       imgElement.alt = matchedMovie.name;
       imgElement.title = matchedMovie.name;
+
+      // Add onclick event for redirection
+      imgElement.onclick = () => {
+        const queryString = `movie.html?movie=${encodeURIComponent(matchedMovie.name)}`;
+        window.location.href = queryString;
+      };
 
       const movieNameElement = document.createElement("p");
       movieNameElement.textContent = matchedMovie.name;
